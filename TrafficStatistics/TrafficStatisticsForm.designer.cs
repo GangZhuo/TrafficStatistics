@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TrafficStatisticsForm));
             this.StopButton = new System.Windows.Forms.Button();
             this.StartButton = new System.Windows.Forms.Button();
@@ -61,6 +61,8 @@
             this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.LogTextBox = new System.Windows.Forms.TextBox();
+            this.ChartComboBox = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.RawGroupBox.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -176,7 +178,7 @@
             this.RawGroupBox.Controls.Add(this.panel2);
             this.RawGroupBox.Controls.Add(this.panel1);
             this.RawGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.RawGroupBox.Location = new System.Drawing.Point(6, 152);
+            this.RawGroupBox.Location = new System.Drawing.Point(6, 169);
             this.RawGroupBox.Name = "RawGroupBox";
             this.RawGroupBox.Padding = new System.Windows.Forms.Padding(10);
             this.RawGroupBox.Size = new System.Drawing.Size(555, 208);
@@ -205,49 +207,49 @@
             // TrafficChart
             // 
             this.TrafficChart.BackColor = System.Drawing.Color.Transparent;
-            chartArea2.AxisX.LabelStyle.Enabled = false;
-            chartArea2.AxisX.LineColor = System.Drawing.Color.DimGray;
-            chartArea2.AxisX.MajorGrid.Interval = 3D;
-            chartArea2.AxisX.MajorGrid.LineColor = System.Drawing.Color.Gainsboro;
-            chartArea2.AxisX.MajorTickMark.Enabled = false;
-            chartArea2.AxisX2.LineColor = System.Drawing.Color.DimGray;
-            chartArea2.AxisX2.MajorGrid.LineColor = System.Drawing.Color.Gainsboro;
-            chartArea2.AxisX2.MajorTickMark.Enabled = false;
-            chartArea2.AxisY.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
-            chartArea2.AxisY.LabelAutoFitMaxFontSize = 8;
-            chartArea2.AxisY.LabelStyle.Interval = 0D;
-            chartArea2.AxisY.LineColor = System.Drawing.Color.DimGray;
-            chartArea2.AxisY.MajorGrid.LineColor = System.Drawing.Color.Gainsboro;
-            chartArea2.AxisY.MajorTickMark.Enabled = false;
-            chartArea2.AxisY2.LineColor = System.Drawing.Color.DimGray;
-            chartArea2.AxisY2.MajorGrid.LineColor = System.Drawing.Color.Gainsboro;
-            chartArea2.AxisY2.MajorTickMark.Enabled = false;
-            chartArea2.AxisY2.Minimum = 0D;
-            chartArea2.Name = "ChartArea1";
-            this.TrafficChart.ChartAreas.Add(chartArea2);
+            chartArea1.AxisX.LabelStyle.Enabled = false;
+            chartArea1.AxisX.LineColor = System.Drawing.Color.DimGray;
+            chartArea1.AxisX.MajorGrid.Interval = 3D;
+            chartArea1.AxisX.MajorGrid.LineColor = System.Drawing.Color.Gainsboro;
+            chartArea1.AxisX.MajorTickMark.Enabled = false;
+            chartArea1.AxisX2.LineColor = System.Drawing.Color.DimGray;
+            chartArea1.AxisX2.MajorGrid.LineColor = System.Drawing.Color.Gainsboro;
+            chartArea1.AxisX2.MajorTickMark.Enabled = false;
+            chartArea1.AxisY.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
+            chartArea1.AxisY.LabelAutoFitMaxFontSize = 8;
+            chartArea1.AxisY.LabelStyle.Interval = 0D;
+            chartArea1.AxisY.LineColor = System.Drawing.Color.DimGray;
+            chartArea1.AxisY.MajorGrid.LineColor = System.Drawing.Color.Gainsboro;
+            chartArea1.AxisY.MajorTickMark.Enabled = false;
+            chartArea1.AxisY2.LineColor = System.Drawing.Color.DimGray;
+            chartArea1.AxisY2.MajorGrid.LineColor = System.Drawing.Color.Gainsboro;
+            chartArea1.AxisY2.MajorTickMark.Enabled = false;
+            chartArea1.AxisY2.Minimum = 0D;
+            chartArea1.Name = "ChartArea1";
+            this.TrafficChart.ChartAreas.Add(chartArea1);
             this.TrafficChart.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend2.Font = new System.Drawing.Font("Consolas", 8F);
-            legend2.IsTextAutoFit = false;
-            legend2.MaximumAutoSize = 80F;
-            legend2.Name = "Legend1";
-            this.TrafficChart.Legends.Add(legend2);
+            legend1.Font = new System.Drawing.Font("Consolas", 8F);
+            legend1.IsTextAutoFit = false;
+            legend1.MaximumAutoSize = 80F;
+            legend1.Name = "Legend1";
+            this.TrafficChart.Legends.Add(legend1);
             this.TrafficChart.Location = new System.Drawing.Point(0, 0);
             this.TrafficChart.Name = "TrafficChart";
             this.TrafficChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series3.Font = new System.Drawing.Font("Consolas", 8F);
-            series3.IsXValueIndexed = true;
-            series3.Legend = "Legend1";
-            series3.Name = "Inbound";
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series4.Font = new System.Drawing.Font("Consolas", 8F);
-            series4.IsXValueIndexed = true;
-            series4.Legend = "Legend1";
-            series4.Name = "Outbound";
-            this.TrafficChart.Series.Add(series3);
-            this.TrafficChart.Series.Add(series4);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Font = new System.Drawing.Font("Consolas", 8F);
+            series1.IsXValueIndexed = true;
+            series1.Legend = "Legend1";
+            series1.Name = "Inbound";
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series2.Font = new System.Drawing.Font("Consolas", 8F);
+            series2.IsXValueIndexed = true;
+            series2.Legend = "Legend1";
+            series2.Name = "Outbound";
+            this.TrafficChart.Series.Add(series1);
+            this.TrafficChart.Series.Add(series2);
             this.TrafficChart.Size = new System.Drawing.Size(535, 104);
             this.TrafficChart.TabIndex = 0;
             this.TrafficChart.Text = "Traffic Chart";
@@ -328,6 +330,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.ChartComboBox);
             this.groupBox1.Controls.Add(this.CleanLogsButton);
             this.groupBox1.Controls.Add(this.ResetButton);
             this.groupBox1.Controls.Add(this.label3);
@@ -338,11 +341,12 @@
             this.groupBox1.Controls.Add(this.StartButton);
             this.groupBox1.Controls.Add(this.LeftAddressTextBox);
             this.groupBox1.Controls.Add(this.RightTextBox);
+            this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.Location = new System.Drawing.Point(6, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(555, 146);
+            this.groupBox1.Size = new System.Drawing.Size(555, 163);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Control Panel";
@@ -368,9 +372,9 @@
             // 
             this.groupBox2.Controls.Add(this.LogTextBox);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Location = new System.Drawing.Point(6, 360);
+            this.groupBox2.Location = new System.Drawing.Point(6, 377);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(555, 109);
+            this.groupBox2.Size = new System.Drawing.Size(555, 92);
             this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Log";
@@ -386,9 +390,28 @@
             this.LogTextBox.Name = "LogTextBox";
             this.LogTextBox.ReadOnly = true;
             this.LogTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.LogTextBox.Size = new System.Drawing.Size(549, 90);
+            this.LogTextBox.Size = new System.Drawing.Size(549, 73);
             this.LogTextBox.TabIndex = 0;
             this.LogTextBox.WordWrap = false;
+            // 
+            // ChartComboBox
+            // 
+            this.ChartComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ChartComboBox.FormattingEnabled = true;
+            this.ChartComboBox.Location = new System.Drawing.Point(71, 132);
+            this.ChartComboBox.Name = "ChartComboBox";
+            this.ChartComboBox.Size = new System.Drawing.Size(164, 21);
+            this.ChartComboBox.TabIndex = 7;
+            this.ChartComboBox.SelectedIndexChanged += new System.EventHandler(this.ChartComboBox_SelectedIndexChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(16, 135);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(35, 13);
+            this.label5.TabIndex = 2;
+            this.label5.Text = "Chart:";
             // 
             // TrafficStatisticsForm
             // 
@@ -446,5 +469,7 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TextBox LogTextBox;
         private System.Windows.Forms.Button CleanLogsButton;
+        private System.Windows.Forms.ComboBox ChartComboBox;
+        private System.Windows.Forms.Label label5;
     }
 }

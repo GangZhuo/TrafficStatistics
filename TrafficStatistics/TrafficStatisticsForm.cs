@@ -14,7 +14,7 @@ namespace TrafficStatistics
 {
     public partial class TrafficStatisticsForm : Form
     {
-        private const int TrafficHistoricalSize = 80;
+        private int trafficLogSize = 60;
 
         private IRelay relay;
         private Traffic rawTrafficStatistics = new Traffic();
@@ -23,11 +23,21 @@ namespace TrafficStatistics
         public TrafficStatisticsForm()
         {
             InitializeComponent();
+
+            string[] items = new string[30];
+            for (int i = 0; i < 30; i++)
+            {
+                items[i] = $"Display data for last {i + 1} minutes";
+            }
+            ChartComboBox.Items.AddRange(items);
+
             InitTrafficHistoricalList();
         }
 
         private void StatisticsForm_Load(object sender, EventArgs e)
         {
+            ChartComboBox.SelectedIndex = 0;
+
             TopMostheckBox.Checked = TopMost;
             TypeComboBox.SelectedIndex = 0;
 
@@ -191,30 +201,23 @@ namespace TrafficStatistics
                 trafficLogList = new LinkedList<TrafficLog>();
             else
                 trafficLogList.Clear();
-            for (int i = 0; i < TrafficHistoricalSize; i++)
+            for (int i = 0; i < trafficLogSize; i++)
             {
-                TrafficLog item = new TrafficLog();
-                item.raw = new Traffic
-                {
-                    inboundCounter = 0,
-                    outboundCounter = 0
-                };
-                trafficLogList.AddLast(item);
+                trafficLogList.AddLast(new TrafficLog());
             }
         }
 
         private void UpdateTrafficList()
         {
-            TrafficLog current = new TrafficLog();
-            current.raw = new Traffic
-            {
-                inboundCounter = rawTrafficStatistics.inboundCounter,
-                outboundCounter = rawTrafficStatistics.outboundCounter
-            };
+            TrafficLog previous = trafficLogList.Last.Value;
+            TrafficLog current = new TrafficLog(
+                new Traffic(rawTrafficStatistics),
+                new Traffic(rawTrafficStatistics, previous.raw)
+            );
             trafficLogList.AddLast(current);
 
-            if (trafficLogList.Count > TrafficHistoricalSize)
-                trafficLogList.RemoveFirst();
+            while (trafficLogList.Count > trafficLogSize) trafficLogList.RemoveFirst();
+            while (trafficLogList.Count < trafficLogSize) trafficLogList.AddFirst(new TrafficLog());
         }
 
         private List<float> rawInboundPoints = new List<float>();
@@ -223,57 +226,42 @@ namespace TrafficStatistics
 
         private void UpdateTrafficChart()
         {
-            TrafficLog previous = null;
-            int i = 0;
-            long maxSpeed = 0;
+            long maxSpeedValue = 0;
             rawInboundPoints.Clear();
             rawOutboundPoints.Clear();
             foreach (TrafficLog item in trafficLogList)
             {
-                if (previous == null)
-                {
-                    rawInboundPoints.Add(item.raw.inboundCounter);
-                    rawOutboundPoints.Add(item.raw.outboundCounter);
-                }
-                else
-                {
-                    rawInboundPoints.Add(item.raw.inboundCounter - previous.raw.inboundCounter);
-                    rawOutboundPoints.Add(item.raw.outboundCounter - previous.raw.outboundCounter);
-                }
+                rawInboundPoints.Add(item.rawSpeed.inbound);
+                rawOutboundPoints.Add(item.rawSpeed.outbound);
 
-                maxSpeed = Math.Max(maxSpeed, (long)Math.Max(rawInboundPoints[i], rawOutboundPoints[i]));
-
-                previous = item;
-                i++;
+                maxSpeedValue = Math.Max(maxSpeedValue,
+                        Math.Max(item.rawSpeed.inbound, item.rawSpeed.outbound)
+                );
             }
 
-            FormattedSize formattedMaxSpeed = new FormattedSize(maxSpeed);
+            FormattedSize maxSpeed = new FormattedSize(maxSpeedValue);
+            TrafficLog last = trafficLogList.Last.Value;
+            RawInboundSpeed.Text = new FormattedSize(last.rawSpeed.inbound) + "/s";
+            RawOutboundSpeed.Text = new FormattedSize(last.rawSpeed.outbound) + "/s";
 
-            if (rawInboundPoints.Count > 0)
+            for (int i = 0; i < rawInboundPoints.Count; i++)
             {
-                i = rawInboundPoints.Count - 1;
-                RawInboundSpeed.Text = new FormattedSize((long)rawInboundPoints[i]) + "/s";
-                RawOutboundSpeed.Text = new FormattedSize((long)rawOutboundPoints[i]) + "/s";
-            }
-
-            for (i = 0; i < rawInboundPoints.Count; i++)
-            {
-                rawInboundPoints[i] /= formattedMaxSpeed.scale;
-                rawOutboundPoints[i] /= formattedMaxSpeed.scale;
+                rawInboundPoints[i] /= maxSpeed.scale;
+                rawOutboundPoints[i] /= maxSpeed.scale;
             }
 
             TrafficChart.Series["Inbound"].Points.DataBindY(rawInboundPoints);
             TrafficChart.Series["Outbound"].Points.DataBindY(rawOutboundPoints);
-            TrafficChart.Series["Inbound"].ToolTip = "#SERIESNAME #VALY{F2} " + formattedMaxSpeed.unit;
-            TrafficChart.Series["Outbound"].ToolTip = "#SERIESNAME #VALY{F2} " + formattedMaxSpeed.unit;
-            TrafficChart.ChartAreas[0].AxisY.LabelStyle.Format = "{0:0.##} " + formattedMaxSpeed.unit;
+            TrafficChart.Series["Inbound"].ToolTip = "#SERIESNAME #VALY{F2} " + maxSpeed.unit + "/s";
+            TrafficChart.Series["Outbound"].ToolTip = "#SERIESNAME #VALY{F2} " + maxSpeed.unit + "/s";
+            TrafficChart.ChartAreas[0].AxisY.LabelStyle.Format = "{0:0.##} " + maxSpeed.unit + "/s";
 
         }
 
         private void UpdateTrafficStatistics()
         {
-            RawInbound.Text = new FormattedSize(rawTrafficStatistics.inboundCounter).ToString();
-            RawOutbound.Text = new FormattedSize(rawTrafficStatistics.outboundCounter).ToString();
+            RawInbound.Text = new FormattedSize(rawTrafficStatistics.inbound).ToString();
+            RawOutbound.Text = new FormattedSize(rawTrafficStatistics.outbound).ToString();
         }
 
 
@@ -332,6 +320,11 @@ namespace TrafficStatistics
                 return value.ToString("F2") + " " + unit;
             }
 
+        }
+
+        private void ChartComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            trafficLogSize = (ChartComboBox.SelectedIndex + 1) * 60;
         }
     }
 }
