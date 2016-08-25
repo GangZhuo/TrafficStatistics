@@ -205,15 +205,22 @@
             // 
             this.TrafficChart.BackColor = System.Drawing.Color.Transparent;
             chartArea1.AxisX.LabelStyle.Enabled = false;
-            chartArea1.AxisX.MajorGrid.Interval = 5D;
-            chartArea1.AxisX.MajorGrid.LineColor = System.Drawing.Color.LightGray;
+            chartArea1.AxisX.LineColor = System.Drawing.Color.DimGray;
+            chartArea1.AxisX.MajorGrid.Interval = 3D;
+            chartArea1.AxisX.MajorGrid.LineColor = System.Drawing.Color.Gainsboro;
             chartArea1.AxisX.MajorTickMark.Enabled = false;
+            chartArea1.AxisX2.LineColor = System.Drawing.Color.DimGray;
+            chartArea1.AxisX2.MajorGrid.LineColor = System.Drawing.Color.Gainsboro;
+            chartArea1.AxisX2.MajorTickMark.Enabled = false;
             chartArea1.AxisY.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
             chartArea1.AxisY.LabelAutoFitMaxFontSize = 8;
             chartArea1.AxisY.LabelStyle.Interval = 0D;
-            chartArea1.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
+            chartArea1.AxisY.LineColor = System.Drawing.Color.DimGray;
+            chartArea1.AxisY.MajorGrid.LineColor = System.Drawing.Color.Gainsboro;
             chartArea1.AxisY.MajorTickMark.Enabled = false;
-            chartArea1.AxisY2.MajorGrid.LineColor = System.Drawing.Color.LightGray;
+            chartArea1.AxisY2.LineColor = System.Drawing.Color.DimGray;
+            chartArea1.AxisY2.MajorGrid.LineColor = System.Drawing.Color.Gainsboro;
+            chartArea1.AxisY2.MajorTickMark.Enabled = false;
             chartArea1.AxisY2.Minimum = 0D;
             chartArea1.Name = "ChartArea1";
             this.TrafficChart.ChartAreas.Add(chartArea1);
