@@ -32,8 +32,6 @@ namespace TrafficStatistics.Relay
             private Socket _local;
             private Socket _remote;
             private bool _closed = false;
-            private bool _localShutdown = false;
-            private bool _remoteShutdown = false;
             public const int RecvSize = 16384;
             // remote receive buffer
             private byte[] remoteRecvBuffer = new byte[RecvSize];
@@ -118,10 +116,7 @@ namespace TrafficStatistics.Relay
                     }
                     else
                     {
-                        //Console.WriteLine("bytesRead: " + bytesRead.ToString());
-                        _remote.Shutdown(SocketShutdown.Send);
-                        _remoteShutdown = true;
-                        CheckClose();
+                        this.Close();
                     }
                 }
                 catch (Exception e)
@@ -148,9 +143,7 @@ namespace TrafficStatistics.Relay
                     }
                     else
                     {
-                        _local.Shutdown(SocketShutdown.Send);
-                        _localShutdown = true;
-                        CheckClose();
+                        this.Close();
                     }
                 }
                 catch (Exception e)
@@ -194,14 +187,6 @@ namespace TrafficStatistics.Relay
                 catch (Exception e)
                 {
                     _relay.onError(e);
-                    this.Close();
-                }
-            }
-
-            private void CheckClose()
-            {
-                if (_localShutdown && _remoteShutdown)
-                {
                     this.Close();
                 }
             }

@@ -18,6 +18,8 @@ namespace TrafficStatistics.Relay
             }
         }
 
+        private const int SIP_UDP_CONNRESET = -1744830452;
+
         private Socket _local;
         private UDPPipe _pipe;
 
@@ -42,6 +44,8 @@ namespace TrafficStatistics.Relay
                 // Create a TCP/IP socket.
                 _local = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
                 _local.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+                // Fix WinSock library bug, See https://support.microsoft.com/en-us/kb/263823
+                _local.IOControl(SIP_UDP_CONNRESET, new byte[] { 0, 0, 0, 0 }, null);
                 // Bind the socket to the local endpoint and listen for incoming connections.
                 _local.Bind(_localEP);
 

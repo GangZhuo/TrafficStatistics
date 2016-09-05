@@ -18,7 +18,7 @@ namespace TrafficStatistics
 
         private IRelay relay;
         private Traffic rawTrafficStatistics = new Traffic();
-        private LinkedList<TrafficLog> trafficLogList;
+        private LinkedList<TrafficLog> trafficLogList = new LinkedList<TrafficLog>();
 
         public TrafficStatisticsForm()
         {
@@ -86,6 +86,7 @@ namespace TrafficStatistics
         private void ResetButton_Click(object sender, EventArgs e)
         {
             rawTrafficStatistics.reset();
+            InitTrafficHistoricalList();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -97,6 +98,7 @@ namespace TrafficStatistics
         {
             try
             {
+                timer2.Stop();
                 UpdateTrafficList();
                 if (TrafficChart.InvokeRequired)
                 {
@@ -113,6 +115,10 @@ namespace TrafficStatistics
             catch (Exception ex)
             {
                 string s = ex.Message;
+            }
+            finally
+            {
+                timer2.Start();
             }
         }
 
@@ -197,27 +203,30 @@ namespace TrafficStatistics
 
         private void InitTrafficHistoricalList()
         {
-            if (trafficLogList == null)
-                trafficLogList = new LinkedList<TrafficLog>();
-            else
-                trafficLogList.Clear();
-            for (int i = 0; i < trafficLogSize; i++)
+            lock(trafficLogList)
             {
-                trafficLogList.AddLast(new TrafficLog());
+                trafficLogList.Clear();
+                for (int i = 0; i < trafficLogSize; i++)
+                {
+                    trafficLogList.AddLast(new TrafficLog());
+                }
             }
         }
 
         private void UpdateTrafficList()
         {
-            TrafficLog previous = trafficLogList.Last.Value;
-            TrafficLog current = new TrafficLog(
-                new Traffic(rawTrafficStatistics),
-                new Traffic(rawTrafficStatistics, previous.raw)
-            );
-            trafficLogList.AddLast(current);
+            lock (trafficLogList)
+            {
+                TrafficLog previous = trafficLogList.Last.Value;
+                TrafficLog current = new TrafficLog(
+                    new Traffic(rawTrafficStatistics),
+                    new Traffic(rawTrafficStatistics, previous.raw)
+                );
+                trafficLogList.AddLast(current);
 
-            while (trafficLogList.Count > trafficLogSize) trafficLogList.RemoveFirst();
-            while (trafficLogList.Count < trafficLogSize) trafficLogList.AddFirst(new TrafficLog());
+                while (trafficLogList.Count > trafficLogSize) trafficLogList.RemoveFirst();
+                while (trafficLogList.Count < trafficLogSize) trafficLogList.AddFirst(new TrafficLog());
+            }
         }
 
         private List<float> rawInboundPoints = new List<float>();
@@ -226,21 +235,25 @@ namespace TrafficStatistics
 
         private void UpdateTrafficChart()
         {
+            TrafficLog last;
             long maxSpeedValue = 0;
             rawInboundPoints.Clear();
             rawOutboundPoints.Clear();
-            foreach (TrafficLog item in trafficLogList)
+            lock(trafficLogList)
             {
-                rawInboundPoints.Add(item.rawSpeed.inbound);
-                rawOutboundPoints.Add(item.rawSpeed.outbound);
+                last = trafficLogList.Last.Value;
+                foreach (TrafficLog item in trafficLogList)
+                {
+                    rawInboundPoints.Add(item.rawSpeed.inbound);
+                    rawOutboundPoints.Add(item.rawSpeed.outbound);
 
-                maxSpeedValue = Math.Max(maxSpeedValue,
-                        Math.Max(item.rawSpeed.inbound, item.rawSpeed.outbound)
-                );
+                    maxSpeedValue = Math.Max(maxSpeedValue,
+                            Math.Max(item.rawSpeed.inbound, item.rawSpeed.outbound)
+                    );
+                }
             }
 
             FormattedSize maxSpeed = new FormattedSize(maxSpeedValue);
-            TrafficLog last = trafficLogList.Last.Value;
             RawInboundSpeed.Text = new FormattedSize(last.rawSpeed.inbound) + "/s";
             RawOutboundSpeed.Text = new FormattedSize(last.rawSpeed.outbound) + "/s";
 
