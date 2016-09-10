@@ -127,10 +127,16 @@ namespace TrafficStatistics
             LogTextBox.Text = "";
         }
 
-        private EndPoint ParseEndPoint(string s)
+        private EndPoint ParseEndPoint(string address)
         {
-            string[] ss = s.Split(':');
-            return new IPEndPoint(IPAddress.Parse(ss[0]), Convert.ToInt32(ss[1]));
+            string[] addr_compns = address.Split(':');
+            IPAddress ipAddress;
+            if (string.IsNullOrEmpty(addr_compns[0]))
+                ipAddress = IPAddress.Any;
+            else if (!IPAddress.TryParse(addr_compns[0], out ipAddress))
+                ipAddress = Dns.GetHostEntry(addr_compns[0]).AddressList[0];
+            IPEndPoint ep = new IPEndPoint(ipAddress, Convert.ToInt32(addr_compns[1]));
+            return ep;
         }
 
         private void Start(string leftAddr, string rightAddr, bool udp)
