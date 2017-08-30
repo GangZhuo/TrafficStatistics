@@ -13,6 +13,10 @@
     
 ![Screenshot]
 
+* Relay UDP traffic from 127.0.0.1:5210 to 127.0.0.1:5211, and statistics traffic
+
+    Same TCP, but select UDP "Type".
+
 [Appveyor]: https://ci.appveyor.com/project/GangZhuo/TrafficStatistics/branch/master
 [Build Status]: https://ci.appveyor.com/api/projects/status/j81h4nforlmym2n5?svg=true
 [Screenshot]: https://github.com/GangZhuo/TrafficStatistics/raw/master/screenshot.jpg
