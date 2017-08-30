@@ -2,9 +2,6 @@
 
 [![Build Status]][Appveyor]
 
-### Screenshot
-
-
 ### Usage
 
 * Relay TCP traffic from 127.0.0.1:5210 to 127.0.0.1:5211, and statistics traffic
