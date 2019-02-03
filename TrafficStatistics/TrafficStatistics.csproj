@@ -50,6 +50,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MyTabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Relay\IRelay.cs" />
@@ -101,6 +104,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <None Include="resources\close_16x16.png" />
     <Content Include="resources\wave.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

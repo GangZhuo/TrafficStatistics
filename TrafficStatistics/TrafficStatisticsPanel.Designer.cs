@@ -62,6 +62,7 @@
             this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.LogTextBox = new System.Windows.Forms.TextBox();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.RawGroupBox.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -69,6 +70,10 @@
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // StopButton
@@ -151,8 +156,7 @@
             // 
             // ResetButton
             // 
-            this.ResetButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.ResetButton.Location = new System.Drawing.Point(389, 25);
+            this.ResetButton.Location = new System.Drawing.Point(381, 24);
             this.ResetButton.Name = "ResetButton";
             this.ResetButton.Size = new System.Drawing.Size(110, 39);
             this.ResetButton.TabIndex = 6;
@@ -164,11 +168,11 @@
             // 
             this.RawGroupBox.Controls.Add(this.panel2);
             this.RawGroupBox.Controls.Add(this.panel1);
-            this.RawGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.RawGroupBox.Location = new System.Drawing.Point(6, 156);
+            this.RawGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.RawGroupBox.Location = new System.Drawing.Point(0, 0);
             this.RawGroupBox.Name = "RawGroupBox";
             this.RawGroupBox.Padding = new System.Windows.Forms.Padding(10, 9, 10, 9);
-            this.RawGroupBox.Size = new System.Drawing.Size(555, 192);
+            this.RawGroupBox.Size = new System.Drawing.Size(571, 157);
             this.RawGroupBox.TabIndex = 0;
             this.RawGroupBox.TabStop = false;
             this.RawGroupBox.Text = "Statistics";
@@ -179,7 +183,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(10, 89);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(535, 94);
+            this.panel2.Size = new System.Drawing.Size(551, 59);
             this.panel2.TabIndex = 5;
             // 
             // panel3
@@ -188,7 +192,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(535, 94);
+            this.panel3.Size = new System.Drawing.Size(551, 59);
             this.panel3.TabIndex = 1;
             // 
             // TrafficChart
@@ -237,7 +241,7 @@
             series2.Name = "Outbound";
             this.TrafficChart.Series.Add(series1);
             this.TrafficChart.Series.Add(series2);
-            this.TrafficChart.Size = new System.Drawing.Size(535, 94);
+            this.TrafficChart.Size = new System.Drawing.Size(551, 59);
             this.TrafficChart.TabIndex = 0;
             this.TrafficChart.Text = "Traffic Chart";
             // 
@@ -252,7 +256,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(10, 23);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(535, 66);
+            this.panel1.Size = new System.Drawing.Size(551, 66);
             this.panel1.TabIndex = 4;
             // 
             // RawOutboundSpeed
@@ -333,7 +337,7 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.Location = new System.Drawing.Point(6, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(555, 150);
+            this.groupBox1.Size = new System.Drawing.Size(571, 150);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Control Panel";
@@ -361,8 +365,7 @@
             // 
             // CleanLogsButton
             // 
-            this.CleanLogsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.CleanLogsButton.Location = new System.Drawing.Point(389, 72);
+            this.CleanLogsButton.Location = new System.Drawing.Point(381, 73);
             this.CleanLogsButton.Name = "CleanLogsButton";
             this.CleanLogsButton.Size = new System.Drawing.Size(110, 39);
             this.CleanLogsButton.TabIndex = 6;
@@ -389,9 +392,9 @@
             // 
             this.groupBox2.Controls.Add(this.LogTextBox);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Location = new System.Drawing.Point(6, 348);
+            this.groupBox2.Location = new System.Drawing.Point(0, 0);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(555, 84);
+            this.groupBox2.Size = new System.Drawing.Size(571, 154);
             this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Log";
@@ -407,16 +410,33 @@
             this.LogTextBox.Name = "LogTextBox";
             this.LogTextBox.ReadOnly = true;
             this.LogTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.LogTextBox.Size = new System.Drawing.Size(549, 64);
+            this.LogTextBox.Size = new System.Drawing.Size(565, 134);
             this.LogTextBox.TabIndex = 0;
             this.LogTextBox.WordWrap = false;
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(6, 156);
+            this.splitContainer1.Name = "splitContainer1";
+            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.RawGroupBox);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.groupBox2);
+            this.splitContainer1.Size = new System.Drawing.Size(571, 315);
+            this.splitContainer1.SplitterDistance = 157;
+            this.splitContainer1.TabIndex = 7;
             // 
             // TrafficStatisticsPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.RawGroupBox);
+            this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.groupBox1);
             this.Name = "TrafficStatisticsPanel";
             this.Padding = new System.Windows.Forms.Padding(6);
@@ -432,6 +452,10 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -466,5 +490,6 @@
         private System.Windows.Forms.ComboBox ChartComboBox;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.CheckBox PrintPayloadCheckBox;
+        private System.Windows.Forms.SplitContainer splitContainer1;
     }
 }
