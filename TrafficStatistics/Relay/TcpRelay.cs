@@ -29,7 +29,7 @@ namespace TrafficStatistics.Relay
             try
             {
                 // Create a TCP/IP socket.
-                _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                _socket = new Socket(_localEP.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                 _socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
                 // Bind the socket to the local endpoint and listen for incoming connections.
                 _socket.Bind(_localEP);
@@ -54,19 +54,19 @@ namespace TrafficStatistics.Relay
             }
         }
 
-        public void onInbound(long n)
+        public void onInbound(RelayEventArgs e)
         {
-            Inbound?.Invoke(this, new RelayEventArgs(n));
+            Inbound?.Invoke(this, e);
         }
 
-        public void onOutbound(long n)
+        public void onOutbound(RelayEventArgs e)
         {
-            Outbound?.Invoke(this, new RelayEventArgs(n));
+            Outbound?.Invoke(this, e);
         }
 
-        public void onError(Exception e)
+        public void onError(RelayErrorEventArgs e)
         {
-            Error?.Invoke(this, new RelayErrorEventArgs(e));
+            Error?.Invoke(this, e);
         }
 
         private void AcceptCallback(IAsyncResult ar)
@@ -84,7 +84,7 @@ namespace TrafficStatistics.Relay
             }
             catch (Exception e)
             {
-                onError(e);
+                onError(new RelayErrorEventArgs(e));
             }
             finally
             {
@@ -98,7 +98,7 @@ namespace TrafficStatistics.Relay
                 }
                 catch (Exception e)
                 {
-                    onError(e);
+                    onError(new RelayErrorEventArgs(e));
                 }
             }
         }

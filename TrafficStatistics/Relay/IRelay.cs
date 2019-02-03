@@ -11,18 +11,22 @@ namespace TrafficStatistics.Relay
         void Start();
         void Stop();
 
-        void onInbound(long n);
-        void onOutbound(long n);
-        void onError(Exception e);
+        void onInbound(RelayEventArgs e);
+        void onOutbound(RelayEventArgs e);
+        void onError(RelayErrorEventArgs e);
     }
 
     public class RelayEventArgs : EventArgs
     {
-        public long Value { get; private set; }
+        public byte[] Buffer { get; private set; }
+        public int Offset { get; private set; }
+        public int Length { get; private set; }
 
-        public RelayEventArgs(long value)
+        public RelayEventArgs(byte[] buffer, int offset, int length)
         {
-            Value = value;
+            Buffer = buffer;
+            Offset = offset;
+            Length = length;
         }
     }
 

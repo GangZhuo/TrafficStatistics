@@ -99,7 +99,7 @@ namespace TrafficStatistics.Relay
             }
             catch (Exception ex)
             {
-                _relay.onError(ex);
+                _relay.onError(new RelayErrorEventArgs(ex));
             }
             finally
             {
@@ -145,14 +145,14 @@ namespace TrafficStatistics.Relay
             {
                 try
                 {
-                    _remote = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+                    _remote = new Socket(_remoteEP.AddressFamily, SocketType.Dgram, ProtocolType.Udp);
                     _remote.SetSocketOption(SocketOptionLevel.Udp, SocketOptionName.NoDelay, true);
                     _remote.BeginConnect(_remoteEP, new AsyncCallback(remoteConnectCallback), null);
                     Delay();
                 }
                 catch (Exception e)
                 {
-                    _relay.onError(e);
+                    _relay.onError(new RelayErrorEventArgs(e));
                     this.Close();
                 }
             }
@@ -179,7 +179,7 @@ namespace TrafficStatistics.Relay
                 }
                 catch (Exception e)
                 {
-                    _relay.onError(e);
+                    _relay.onError(new RelayErrorEventArgs(e));
                     this.Close();
                 }
             }
@@ -197,7 +197,7 @@ namespace TrafficStatistics.Relay
                 }
                 catch (Exception e)
                 {
-                    _relay.onError(e);
+                    _relay.onError(new RelayErrorEventArgs(e));
                     this.Close();
                 }
             }
@@ -214,7 +214,7 @@ namespace TrafficStatistics.Relay
                 }
                 catch (Exception e)
                 {
-                    _relay.onError(e);
+                    _relay.onError(new RelayErrorEventArgs(e));
                     this.Close();
                 }
             }
@@ -233,15 +233,16 @@ namespace TrafficStatistics.Relay
                             _sending = true;
                             byte[] bytes = _packages.First.Value;
                             _packages.RemoveFirst();
-                            _relay.onOutbound(bytes.Length);
-                            _remote.BeginSend(bytes, 0, bytes.Length, 0, new AsyncCallback(remoteSendCallback), null);
+                            var e = new RelayEventArgs(bytes, 0, bytes.Length);
+                            _relay.onInbound(e);
+                            _remote.BeginSend(e.Buffer, e.Offset, e.Length, 0, new AsyncCallback(remoteSendCallback), null);
                             Delay();
                         }
                     }
                 }
                 catch (Exception e)
                 {
-                    _relay.onError(e);
+                    _relay.onError(new RelayErrorEventArgs(e));
                     this.Close();
                 }
             }
@@ -258,7 +259,7 @@ namespace TrafficStatistics.Relay
                 }
                 catch (Exception e)
                 {
-                    _relay.onError(e);
+                    _relay.onError(new RelayErrorEventArgs(e));
                     this.Close();
                 }
             }
@@ -271,8 +272,9 @@ namespace TrafficStatistics.Relay
                     int bytesRead = _remote.EndReceive(ar);
                     if (bytesRead > 0)
                     {
-                        _relay.onInbound(bytesRead);
-                        _local.BeginSendTo(remoteRecvBuffer, 0, bytesRead, 0, _localEP, new AsyncCallback(localSendCallback), null);
+                        var e = new RelayEventArgs(remoteRecvBuffer, 0, bytesRead);
+                        _relay.onOutbound(e);
+                        _local.BeginSendTo(e.Buffer, 0, e.Length, 0, _localEP, new AsyncCallback(localSendCallback), null);
                         Delay();
                     }
                     else
@@ -283,7 +285,7 @@ namespace TrafficStatistics.Relay
                 }
                 catch (Exception e)
                 {
-                    _relay.onError(e);
+                    _relay.onError(new RelayErrorEventArgs(e));
                     this.Close();
                 }
             }
@@ -300,7 +302,7 @@ namespace TrafficStatistics.Relay
                 }
                 catch (Exception e)
                 {
-                    _relay.onError(e);
+                    _relay.onError(new RelayErrorEventArgs(e));
                     this.Close();
                 }
             }
@@ -330,7 +332,7 @@ namespace TrafficStatistics.Relay
                     }
                     catch (SocketException e)
                     {
-                        _relay.onError(e);
+                        _relay.onError(new RelayErrorEventArgs(e));
                     }
                 }
                 if (reportClose && OnClose != null)

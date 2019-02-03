@@ -42,7 +42,7 @@ namespace TrafficStatistics.Relay
             try
             {
                 // Create a TCP/IP socket.
-                _local = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+                _local = new Socket(_localEP.AddressFamily, SocketType.Dgram, ProtocolType.Udp);
                 _local.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
                 // Fix WinSock library bug, See https://support.microsoft.com/en-us/kb/263823
                 _local.IOControl(SIP_UDP_CONNRESET, new byte[] { 0, 0, 0, 0 }, null);
@@ -56,7 +56,7 @@ namespace TrafficStatistics.Relay
             catch (SocketException e)
             {
                 Stop();
-                onError(e);
+                onError(new RelayErrorEventArgs(e));
             }
         }
 
@@ -69,19 +69,19 @@ namespace TrafficStatistics.Relay
             }
         }
 
-        public void onInbound(long n)
+        public void onInbound(RelayEventArgs e)
         {
-            Inbound?.Invoke(this, new RelayEventArgs(n));
+            Inbound?.Invoke(this, e);
         }
 
-        public void onOutbound(long n)
+        public void onOutbound(RelayEventArgs e)
         {
-            Outbound?.Invoke(this, new RelayEventArgs(n));
+            Outbound?.Invoke(this, e);
         }
 
-        public void onError(Exception e)
+        public void onError(RelayErrorEventArgs e)
         {
-            Error?.Invoke(this, new RelayErrorEventArgs(e));
+            Error?.Invoke(this, e);
         }
 
         private void localStartReceive()
@@ -94,7 +94,7 @@ namespace TrafficStatistics.Relay
             }
             catch (Exception e)
             {
-                onError(e);
+                onError(new RelayErrorEventArgs(e));
             }
         }
 
@@ -113,7 +113,7 @@ namespace TrafficStatistics.Relay
             }
             catch (Exception e)
             {
-                onError(e);
+                onError(new RelayErrorEventArgs(e));
             }
             finally
             {
