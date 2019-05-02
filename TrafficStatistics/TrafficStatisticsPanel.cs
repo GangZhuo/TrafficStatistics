@@ -23,6 +23,7 @@ namespace TrafficStatistics
         private bool printPayload;
         private int payloadType = -1;
 
+        public ItemInfo ItemInfo { get; set; }
 
         public TrafficStatisticsPanel()
         {
@@ -40,19 +41,36 @@ namespace TrafficStatistics
 
         private void TrafficStatisticsPanel_Load(object sender, EventArgs e)
         {
+            try
+            {
 #if REDIRECT_CONSOLE
 
             RedirectConsole();
 
 #endif
 
-            ChartComboBox.SelectedIndex = 0;
+                ChartComboBox.SelectedIndex = 0;
 
-            TypeComboBox.SelectedIndex = 0;
-            PrintPayloadCheckBox.Checked = printPayload;
+                TypeComboBox.SelectedItem = ItemInfo?.Protocol ?? TypeComboBox.Items[0];
+                printPayload = ItemInfo?.PrintPayload ?? false;
+                LeftAddressTextBox.Text = ItemInfo?.LocalAddress ?? "127.0.0.1:5210";
+                RightTextBox.Text = ItemInfo?.RemoteAddress ?? "127.0.0.1:5210";
 
-            timer1.Start();
-            timer2.Start();
+                PrintPayloadCheckBox.Checked = printPayload;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            try
+            {
+                timer1.Start();
+                timer2.Start();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         protected override void OnHandleDestroyed(EventArgs e)

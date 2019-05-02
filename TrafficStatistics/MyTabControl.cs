@@ -42,39 +42,23 @@ namespace TrafficStatistics
             Rectangle r = GetTabRect(e.Index);
             if (e.Index == this.SelectedIndex)    //当前选中的Tab页，设置不同的样式以示选中
             {
-                bool closable = IsClosable(e.Index);
                 Brush selected_color = Brushes.Gold; //选中的项的背景色
                 g.FillRectangle(selected_color, r); //改变选项卡标签的背景色 
                 string title = this.TabPages[e.Index].Text;
-                if (closable)
-                    title += "   ";
-                else
-                    title = " " + title;
                 g.DrawString(title,
                     this.Font,
                     new SolidBrush(Color.Black),
                     new PointF(r.X + 3, r.Y + 6));//PointF选项卡标题的位置 
-                if (closable)
-                {
-                    r.Offset(r.Width - iconWidth - 3, 2);
-                    g.DrawImage(icon, new Point(r.X - 2, r.Y + 2));//选项卡上的图标的位置 fntTab = new System.Drawing.Font(e.Font, FontStyle.Bold);
-                }
+                r.Offset(r.Width - iconWidth - 3, 2);
+                g.DrawImage(icon, new Point(r.X - 2, r.Y + 2));//选项卡上的图标的位置 fntTab = new System.Drawing.Font(e.Font, FontStyle.Bold);
             }
             else//非选中的
             {
-                bool closable = IsClosable(e.Index);
                 g.FillRectangle(biaocolor, r); //改变选项卡标签的背景色 
                 string title = this.TabPages[e.Index].Text;
-                if (closable)
-                    title += "   ";
-                else
-                    title = " " + title;
                 g.DrawString(title, this.Font, new SolidBrush(Color.Black), new PointF(r.X + 3, r.Y + 6));//PointF选项卡标题的位置 
-                if(closable)
-                {
-                    r.Offset(r.Width - iconWidth - 3, 2);
-                    g.DrawImage(icon, new Point(r.X - 2, r.Y + 2));//选项卡上的图标的位置 
-                }
+                r.Offset(r.Width - iconWidth - 3, 2);
+                g.DrawImage(icon, new Point(r.X - 2, r.Y + 2));//选项卡上的图标的位置 
             }
         }
 
@@ -83,17 +67,16 @@ namespace TrafficStatistics
             #region 左键判断是否在关闭区域
             if (e.Button == MouseButtons.Left)
             {
-                if (IsClosable(this.SelectedIndex))
+                Point p = e.Location;
+                Rectangle r = GetTabRect(this.SelectedIndex);
+                r.Offset(r.Width - iconWidth - 3, 2);
+                r.Width = iconWidth;
+                r.Height = iconHeight;
+                if (r.Contains(p)) //点击特定区域时才发生 
                 {
-                    Point p = e.Location;
-                    Rectangle r = GetTabRect(this.SelectedIndex);
-                    r.Offset(r.Width - iconWidth - 3, 2);
-                    r.Width = iconWidth;
-                    r.Height = iconHeight;
-                    if (r.Contains(p)) //点击特定区域时才发生 
-                    {
-                        this.TabPages.Remove(this.SelectedTab);
-                    }
+                    var tab = this.SelectedTab;
+                    this.TabPages.Remove(tab);
+                    tab.Dispose();
                 }
             }
             #endregion
@@ -120,20 +103,13 @@ namespace TrafficStatistics
                     if (this.GetTabRect(i).Contains(new Point(e.X, e.Y)))//找到后，关闭
                     {
                         this.SelectedTab = tp;
-                        if (IsClosable(i))
-                        {
-                            this.TabPages.Remove(this.SelectedTab);
-                        }
+                        this.TabPages.Remove(tp);
+                        tp.Dispose();
                         break;
                     }
                 }
             }
             #endregion
-        }
-
-        protected virtual bool IsClosable(int index)
-        {
-            return index > 0 && index < this.TabCount - 1;
         }
     }
 }
