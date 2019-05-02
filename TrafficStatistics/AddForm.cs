@@ -46,7 +46,8 @@ namespace TrafficStatistics
         {
             try
             {
-                TypeComboBox.SelectedIndex = 0;
+                if (TypeComboBox.SelectedIndex == -1)
+                    TypeComboBox.SelectedIndex = 0;
             }
             catch (Exception ex)
             {
