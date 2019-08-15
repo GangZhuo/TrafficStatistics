@@ -7,6 +7,7 @@ namespace TrafficStatistics.Relay
         event EventHandler<RelayEventArgs> Inbound;
         event EventHandler<RelayEventArgs> Outbound;
         event EventHandler<RelayErrorEventArgs> Error;
+        event EventHandler<WriteLogEventArgs> WriteLog;
 
         void Start();
         void Stop();
@@ -14,6 +15,7 @@ namespace TrafficStatistics.Relay
         void onInbound(RelayEventArgs e);
         void onOutbound(RelayEventArgs e);
         void onError(RelayErrorEventArgs e);
+        void onWriteLog(WriteLogEventArgs e);
     }
 
     public class RelayEventArgs : EventArgs
@@ -37,6 +39,16 @@ namespace TrafficStatistics.Relay
         public RelayErrorEventArgs(Exception error)
         {
             Error = error;
+        }
+    }
+
+    public class WriteLogEventArgs : EventArgs
+    {
+        public string Message { get; private set; }
+
+        public WriteLogEventArgs(string msg)
+        {
+            Message = msg;
         }
     }
 }

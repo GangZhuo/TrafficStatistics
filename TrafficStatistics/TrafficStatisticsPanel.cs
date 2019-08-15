@@ -182,6 +182,8 @@ namespace TrafficStatistics
             relay.Inbound += Relay_Inbound;
             relay.Outbound += Relay_Outbound;
             relay.Error += Relay_Error;
+            relay.WriteLog += Relay_WriteLog;
+            
             relay.Start();
 
             TypeComboBox.Enabled = false;
@@ -244,6 +246,12 @@ namespace TrafficStatistics
         {
             if (e.Error != null)
                 AppendLog(e.Error.ToString());
+        }
+
+        private void Relay_WriteLog(object sender, WriteLogEventArgs e)
+        {
+            if (e.Message != null)
+                AppendLog(e.Message);
         }
 
         private void AppendLog(string text)

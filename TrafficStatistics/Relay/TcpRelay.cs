@@ -16,6 +16,7 @@ namespace TrafficStatistics.Relay
         public event EventHandler<RelayEventArgs> Inbound;
         public event EventHandler<RelayEventArgs> Outbound;
         public event EventHandler<RelayErrorEventArgs> Error;
+        public event EventHandler<WriteLogEventArgs> WriteLog;
 
         public TCPRelay(EndPoint localEP, EndPoint remoteEP)
         {
@@ -67,6 +68,11 @@ namespace TrafficStatistics.Relay
         public void onError(RelayErrorEventArgs e)
         {
             Error?.Invoke(this, e);
+        }
+
+        public void onWriteLog(WriteLogEventArgs e)
+        {
+            WriteLog?.Invoke(this, e);
         }
 
         private void AcceptCallback(IAsyncResult ar)

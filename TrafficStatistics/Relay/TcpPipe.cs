@@ -37,6 +37,10 @@ namespace TrafficStatistics.Relay
             private byte[] remoteRecvBuffer = new byte[RecvSize];
             // connection receive buffer
             private byte[] connetionRecvBuffer = new byte[RecvSize];
+            private int _remoteTime;
+            private int _id;
+
+            private static int _maxid = 0;
 
             public Handler(IRelay relay, EndPoint localEP, EndPoint remoteEP)
             {
@@ -53,7 +57,11 @@ namespace TrafficStatistics.Relay
                     _remote = new Socket(_remoteEP.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                     _remote.SetSocketOption(SocketOptionLevel.Tcp, SocketOptionName.NoDelay, true);
 
+                    _id = System.Threading.Interlocked.Increment(ref _maxid);
+
                     // Connect to the remote endpoint.
+                    _relay.onWriteLog(new WriteLogEventArgs($"\r\n{_id}: 连接 {_remoteEP} ...\r\n"));
+                    _remoteTime = Environment.TickCount;
                     _remote.BeginConnect(_remoteEP, new AsyncCallback(ConnectCallback), null);
                 }
                 catch (Exception e)
@@ -71,6 +79,8 @@ namespace TrafficStatistics.Relay
                 }
                 try
                 {
+                    _relay.onWriteLog(new WriteLogEventArgs($"{_id}: 已连接 {_remoteEP}，耗时 {Environment.TickCount - _remoteTime} 毫秒\r\n"));
+                    _remoteTime = Environment.TickCount;
                     _remote.EndConnect(ar);
                     StartPipe();
                 }
@@ -111,6 +121,8 @@ namespace TrafficStatistics.Relay
 
                     if (bytesRead > 0)
                     {
+                        _relay.onWriteLog(new WriteLogEventArgs($"{_id}: 接收到 {_remoteEP} 的数据，耗时 {Environment.TickCount - _remoteTime} 毫秒\r\n"));
+                        _remoteTime = Environment.TickCount;
                         var e = new RelayEventArgs(remoteRecvBuffer, 0, bytesRead);
                         _relay.onOutbound(e);
                         _local.BeginSend(e.Buffer, e.Offset, e.Length, 0, new AsyncCallback(PipeConnectionSendCallback), null);
@@ -141,6 +153,8 @@ namespace TrafficStatistics.Relay
                     {
                         var e = new RelayEventArgs(connetionRecvBuffer, 0, bytesRead);
                         _relay.onInbound(e);
+                        _relay.onWriteLog(new WriteLogEventArgs($"{_id}: 发送 {bytesRead} 字节到 {_remoteEP} ...\r\n"));
+                        _remoteTime = Environment.TickCount;
                         _remote.BeginSend(e.Buffer, e.Offset, e.Length, 0, new AsyncCallback(PipeRemoteSendCallback), null);
                     }
                     else
@@ -163,6 +177,8 @@ namespace TrafficStatistics.Relay
                 }
                 try
                 {
+                    _relay.onWriteLog(new WriteLogEventArgs($"{_id}: 已发送到 {_remoteEP}，耗时 {Environment.TickCount - _remoteTime} 毫秒\r\n"));
+                    _remoteTime = Environment.TickCount;
                     _remote.EndSend(ar);
                     _local.BeginReceive(this.connetionRecvBuffer, 0, RecvSize, 0,
                         new AsyncCallback(PipeConnectionReceiveCallback), null);
