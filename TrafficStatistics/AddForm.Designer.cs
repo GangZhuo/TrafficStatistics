@@ -37,12 +37,15 @@
             this.label7 = new System.Windows.Forms.Label();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txSocks5Address = new System.Windows.Forms.TextBox();
+            this.chkUseSocks5 = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // PrintPayloadCheckBox
             // 
             this.PrintPayloadCheckBox.AutoSize = true;
-            this.PrintPayloadCheckBox.Location = new System.Drawing.Point(128, 98);
+            this.PrintPayloadCheckBox.Location = new System.Drawing.Point(130, 155);
             this.PrintPayloadCheckBox.Name = "PrintPayloadCheckBox";
             this.PrintPayloadCheckBox.Size = new System.Drawing.Size(102, 16);
             this.PrintPayloadCheckBox.TabIndex = 15;
@@ -108,7 +111,7 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(126, 127);
+            this.btnOK.Location = new System.Drawing.Point(128, 184);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 16;
@@ -118,7 +121,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(217, 126);
+            this.btnCancel.Location = new System.Drawing.Point(219, 183);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 16;
@@ -126,11 +129,40 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(19, 103);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(95, 12);
+            this.label1.TabIndex = 17;
+            this.label1.Text = "Socks5 Address:";
+            // 
+            // txSocks5Address
+            // 
+            this.txSocks5Address.Location = new System.Drawing.Point(128, 100);
+            this.txSocks5Address.Name = "txSocks5Address";
+            this.txSocks5Address.Size = new System.Drawing.Size(164, 21);
+            this.txSocks5Address.TabIndex = 18;
+            // 
+            // chkUseSocks5
+            // 
+            this.chkUseSocks5.AutoSize = true;
+            this.chkUseSocks5.Location = new System.Drawing.Point(128, 128);
+            this.chkUseSocks5.Name = "chkUseSocks5";
+            this.chkUseSocks5.Size = new System.Drawing.Size(120, 16);
+            this.chkUseSocks5.TabIndex = 19;
+            this.chkUseSocks5.Text = "Use socks5 proxy";
+            this.chkUseSocks5.UseVisualStyleBackColor = true;
+            // 
             // AddForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(313, 161);
+            this.ClientSize = new System.Drawing.Size(313, 226);
+            this.Controls.Add(this.chkUseSocks5);
+            this.Controls.Add(this.txSocks5Address);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.PrintPayloadCheckBox);
@@ -163,5 +195,8 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txSocks5Address;
+        private System.Windows.Forms.CheckBox chkUseSocks5;
     }
 }

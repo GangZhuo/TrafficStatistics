@@ -16,5 +16,8 @@ namespace TrafficStatistics
 
         public bool PrintPayload { get; set; }
 
+        public string Socks5Address { get; set; }
+
+        public bool UseSocks5Proxy { get; set; }
     }
 }

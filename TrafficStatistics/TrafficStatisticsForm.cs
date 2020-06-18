@@ -86,7 +86,9 @@ namespace TrafficStatistics
                         Protocol = frm.Protocol,
                         LocalAddress = frm.LocalAddress,
                         RemoteAddress = frm.RemoteAddress,
-                        PrintPayload = frm.PrintPayload
+                        PrintPayload = frm.PrintPayload,
+                        Socks5Address = frm.Socks5Address,
+                        UseSocks5Proxy = frm.UseSocks5,
                     };
                     var lvitem = new ListViewItem(new string[] {
                         info.Protocol,
@@ -116,12 +118,16 @@ namespace TrafficStatistics
                 frm.LocalAddress = info.LocalAddress;
                 frm.RemoteAddress = info.RemoteAddress;
                 frm.PrintPayload = info.PrintPayload;
+                frm.Socks5Address = info.Socks5Address;
+                frm.UseSocks5 = info.UseSocks5Proxy;
                 if (frm.ShowDialog() == DialogResult.OK)
                 {
                     info.Protocol = frm.Protocol;
                     info.LocalAddress = frm.LocalAddress;
                     info.RemoteAddress = frm.RemoteAddress;
                     info.PrintPayload = frm.PrintPayload;
+                    info.Socks5Address = frm.Socks5Address;
+                    info.UseSocks5Proxy = frm.UseSocks5;
 
                     _SelectedItem.Text = info.Protocol;
                     _SelectedItem.SubItems[0].Text = info.Protocol;
@@ -173,6 +179,8 @@ namespace TrafficStatistics
                 xelem.Add(new XAttribute("local", info.LocalAddress));
                 xelem.Add(new XAttribute("remote", info.RemoteAddress));
                 xelem.Add(new XAttribute("print", info.PrintPayload ? "true" : "false"));
+                xelem.Add(new XAttribute("socks5", info.Socks5Address));
+                xelem.Add(new XAttribute("proxy", info.UseSocks5Proxy ? "true" : "false"));
 
                 xroot.Add(xelem);
             }
@@ -195,7 +203,9 @@ namespace TrafficStatistics
                         Protocol = x.Attribute("proto").Value,
                         LocalAddress = x.Attribute("local").Value,
                         RemoteAddress = x.Attribute("remote").Value,
-                        PrintPayload = x.Attribute("print").Value == "true"
+                        PrintPayload = x.Attribute("print").Value == "true",
+                        Socks5Address = x.Attribute("socks5")?.Value ?? "127.0.0.1:1080",
+                        UseSocks5Proxy = x.Attribute("proxy")?.Value == "true",
                     });
                 listView1.Items.Clear();
                 foreach(ItemInfo info in list)
@@ -203,7 +213,9 @@ namespace TrafficStatistics
                     var lvitem = new ListViewItem(new string[] {
                         info.Protocol,
                         info.LocalAddress,
-                        info.RemoteAddress
+                        info.RemoteAddress,
+                        info.Socks5Address,
+                        info.UseSocks5Proxy ? "Y":"N",
                     });
                     lvitem.Tag = info;
                     this.listView1.Items.Add(lvitem);

@@ -63,6 +63,9 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.LogTextBox = new System.Windows.Forms.TextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txSocks5 = new System.Windows.Forms.TextBox();
+            this.chkUseProxy = new System.Windows.Forms.CheckBox();
             this.RawGroupBox.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -79,9 +82,9 @@
             // StopButton
             // 
             this.StopButton.Enabled = false;
-            this.StopButton.Location = new System.Drawing.Point(260, 72);
+            this.StopButton.Location = new System.Drawing.Point(260, 114);
             this.StopButton.Name = "StopButton";
-            this.StopButton.Size = new System.Drawing.Size(110, 39);
+            this.StopButton.Size = new System.Drawing.Size(110, 28);
             this.StopButton.TabIndex = 5;
             this.StopButton.Text = "Stop";
             this.StopButton.UseVisualStyleBackColor = true;
@@ -89,9 +92,9 @@
             // 
             // StartButton
             // 
-            this.StartButton.Location = new System.Drawing.Point(260, 25);
+            this.StartButton.Location = new System.Drawing.Point(260, 77);
             this.StartButton.Name = "StartButton";
-            this.StartButton.Size = new System.Drawing.Size(110, 39);
+            this.StartButton.Size = new System.Drawing.Size(110, 28);
             this.StartButton.TabIndex = 4;
             this.StartButton.Text = "Start";
             this.StartButton.UseVisualStyleBackColor = true;
@@ -156,9 +159,9 @@
             // 
             // ResetButton
             // 
-            this.ResetButton.Location = new System.Drawing.Point(381, 24);
+            this.ResetButton.Location = new System.Drawing.Point(376, 77);
             this.ResetButton.Name = "ResetButton";
-            this.ResetButton.Size = new System.Drawing.Size(110, 39);
+            this.ResetButton.Size = new System.Drawing.Size(110, 28);
             this.ResetButton.TabIndex = 6;
             this.ResetButton.Text = "Reset Statistics";
             this.ResetButton.UseVisualStyleBackColor = true;
@@ -321,6 +324,9 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.chkUseProxy);
+            this.groupBox1.Controls.Add(this.txSocks5);
+            this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.PrintPayloadCheckBox);
             this.groupBox1.Controls.Add(this.ChartComboBox);
             this.groupBox1.Controls.Add(this.CleanLogsButton);
@@ -365,9 +371,9 @@
             // 
             // CleanLogsButton
             // 
-            this.CleanLogsButton.Location = new System.Drawing.Point(381, 73);
+            this.CleanLogsButton.Location = new System.Drawing.Point(376, 114);
             this.CleanLogsButton.Name = "CleanLogsButton";
-            this.CleanLogsButton.Size = new System.Drawing.Size(110, 39);
+            this.CleanLogsButton.Size = new System.Drawing.Size(110, 28);
             this.CleanLogsButton.TabIndex = 6;
             this.CleanLogsButton.Text = "Clean Logs";
             this.CleanLogsButton.UseVisualStyleBackColor = true;
@@ -431,6 +437,32 @@
             this.splitContainer1.SplitterDistance = 156;
             this.splitContainer1.TabIndex = 7;
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(260, 24);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(47, 12);
+            this.label6.TabIndex = 9;
+            this.label6.Text = "Socks5:";
+            // 
+            // txSocks5
+            // 
+            this.txSocks5.Location = new System.Drawing.Point(313, 19);
+            this.txSocks5.Name = "txSocks5";
+            this.txSocks5.Size = new System.Drawing.Size(173, 21);
+            this.txSocks5.TabIndex = 10;
+            // 
+            // chkUseProxy
+            // 
+            this.chkUseProxy.AutoSize = true;
+            this.chkUseProxy.Location = new System.Drawing.Point(313, 49);
+            this.chkUseProxy.Name = "chkUseProxy";
+            this.chkUseProxy.Size = new System.Drawing.Size(78, 16);
+            this.chkUseProxy.TabIndex = 11;
+            this.chkUseProxy.Text = "Use Proxy";
+            this.chkUseProxy.UseVisualStyleBackColor = true;
+            // 
             // TrafficStatisticsPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -490,5 +522,8 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.CheckBox PrintPayloadCheckBox;
         private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.TextBox txSocks5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.CheckBox chkUseProxy;
     }
 }

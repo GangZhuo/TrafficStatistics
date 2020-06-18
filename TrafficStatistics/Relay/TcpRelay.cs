@@ -12,17 +12,21 @@ namespace TrafficStatistics.Relay
 
         private EndPoint _localEP;
         private EndPoint _remoteEP;
+        private EndPoint _socks5EP;
+        private bool _useProxy;
 
         public event EventHandler<RelayEventArgs> Inbound;
         public event EventHandler<RelayEventArgs> Outbound;
         public event EventHandler<RelayErrorEventArgs> Error;
         public event EventHandler<WriteLogEventArgs> WriteLog;
 
-        public TCPRelay(EndPoint localEP, EndPoint remoteEP)
+        public TCPRelay(EndPoint localEP, EndPoint remoteEP, EndPoint socks5EP, bool useProxy)
         {
             _localEP = localEP;
             _remoteEP = remoteEP;
-            this._pipe = new TCPPipe(this, localEP, remoteEP);
+            _socks5EP = socks5EP;
+            _useProxy = useProxy;
+            this._pipe = new TCPPipe(this, localEP, remoteEP, socks5EP, useProxy);
         }
 
         public void Start()

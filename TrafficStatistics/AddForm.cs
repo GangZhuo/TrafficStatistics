@@ -36,6 +36,17 @@ namespace TrafficStatistics
             set { PrintPayloadCheckBox.Checked = value; }
         }
 
+        public string Socks5Address
+        {
+            get { return txSocks5Address.Text.Trim(); }
+            set { txSocks5Address.Text = value; }
+        }
+
+        public bool UseSocks5
+        {
+            get { return chkUseSocks5.Checked; }
+            set { chkUseSocks5.Checked = value; }
+        }
 
         public AddForm()
         {

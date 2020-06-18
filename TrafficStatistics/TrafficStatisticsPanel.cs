@@ -55,6 +55,8 @@ namespace TrafficStatistics
                 printPayload = ItemInfo?.PrintPayload ?? false;
                 LeftAddressTextBox.Text = ItemInfo?.LocalAddress ?? "127.0.0.1:5210";
                 RightTextBox.Text = ItemInfo?.RemoteAddress ?? "127.0.0.1:5210";
+                txSocks5.Text = ItemInfo?.Socks5Address ?? "127.0.0.1:1080";
+                chkUseProxy.Checked = ItemInfo?.UseSocks5Proxy ?? false;
 
                 PrintPayloadCheckBox.Checked = printPayload;
             }
@@ -86,7 +88,12 @@ namespace TrafficStatistics
         {
             try
             {
-                Start(LeftAddressTextBox.Text, RightTextBox.Text, TypeComboBox.SelectedItem.ToString() == "UDP");
+                Start(
+                    LeftAddressTextBox.Text,
+                    RightTextBox.Text,
+                    TypeComboBox.SelectedItem.ToString() == "UDP",
+                    txSocks5.Text,
+                    chkUseProxy.Checked);
             }
             catch (Exception ex)
             {
@@ -162,6 +169,8 @@ namespace TrafficStatistics
 
         private EndPoint ParseEndPoint(string address)
         {
+            if (string.IsNullOrWhiteSpace(address))
+                return null;
             int index = address.LastIndexOf(':');
             string ipStr = address.Substring(0, index);
             string portStr = address.Substring(index + 1);
@@ -174,11 +183,14 @@ namespace TrafficStatistics
             return ep;
         }
 
-        private void Start(string leftAddr, string rightAddr, bool udp)
+        private void Start(string leftAddr, string rightAddr, bool udp, string socks5Addr, bool useProxy)
         {
             EndPoint left = ParseEndPoint(leftAddr);
             EndPoint right = ParseEndPoint(rightAddr);
-            relay = udp ? (IRelay)new UDPRelay(left, right) : (IRelay)new TCPRelay(left, right);
+            EndPoint socks5 = ParseEndPoint(socks5Addr);
+            relay = udp ?
+                (IRelay)new UDPRelay(left, right, socks5, useProxy) :
+                (IRelay)new TCPRelay(left, right, socks5, useProxy);
             relay.Inbound += Relay_Inbound;
             relay.Outbound += Relay_Outbound;
             relay.Error += Relay_Error;

@@ -11,16 +11,20 @@ namespace TrafficStatistics.Relay
         private IRelay _relay;
         private EndPoint _localEP;
         private EndPoint _remoteEP;
+        private EndPoint _socks5EP;
+        private bool _useProxy;
 
         Hashtable _handlers = Hashtable.Synchronized(new Hashtable());
 
         System.Timers.Timer _timer = new System.Timers.Timer(10000);
 
-        public UDPPipe(IRelay relay, EndPoint localEP, EndPoint remoteEP)
+        public UDPPipe(IRelay relay, EndPoint localEP, EndPoint remoteEP, EndPoint socks5EP, bool useProxy)
         {
             _relay = relay;
             _localEP = localEP;
             _remoteEP = remoteEP;
+            _socks5EP = socks5EP;
+            _useProxy = useProxy;
             _timer.AutoReset = true;
             _timer.Enabled = true;
             _timer.Elapsed += _timer_Elapsed;
@@ -35,12 +39,12 @@ namespace TrafficStatistics.Relay
 
         public bool CreatePipe(byte[] firstPacket, int length, Socket fromSocket, EndPoint fromEP)
         {
-            Handler handler = getHandler(fromEP, fromSocket);
+            Handler handler = getHandler(fromEP, fromSocket, _socks5EP, _useProxy);
             handler.Handle(firstPacket, length);
             return true;
         }
 
-        Handler getHandler(EndPoint fromEP, Socket fromSocket)
+        Handler getHandler(EndPoint fromEP, Socket fromSocket, EndPoint socks5EP, bool useProxy)
         {
             string key = fromEP.ToString();
             lock(this)
@@ -54,6 +58,8 @@ namespace TrafficStatistics.Relay
                 handler._local = fromSocket;
                 handler._localEP = fromEP;
                 handler._remoteEP = _remoteEP;
+                handler._socks5EP = socks5EP;
+                handler._useProxy = useProxy;
                 handler.OnClose += handler_OnClose;
                 handler.Start();
                 return handler;
@@ -118,6 +124,8 @@ namespace TrafficStatistics.Relay
             public EndPoint _localEP;
             public EndPoint _remoteEP;
             public Socket _remote;
+            public EndPoint _socks5EP;
+            public bool _useProxy;
 
             private bool _closed = false;
             public const int RecvSize = 16384;
