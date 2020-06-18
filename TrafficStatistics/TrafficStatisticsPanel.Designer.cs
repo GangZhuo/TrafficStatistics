@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.StopButton = new System.Windows.Forms.Button();
             this.StartButton = new System.Windows.Forms.Button();
             this.RightTextBox = new System.Windows.Forms.TextBox();
@@ -66,6 +66,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.txSocks5 = new System.Windows.Forms.TextBox();
             this.chkUseProxy = new System.Windows.Forms.CheckBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.RawGroupBox.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -201,49 +202,49 @@
             // TrafficChart
             // 
             this.TrafficChart.BackColor = System.Drawing.Color.Transparent;
-            chartArea1.AxisX.LabelStyle.Enabled = false;
-            chartArea1.AxisX.LineColor = System.Drawing.Color.DimGray;
-            chartArea1.AxisX.MajorGrid.Interval = 3D;
-            chartArea1.AxisX.MajorGrid.LineColor = System.Drawing.Color.Gainsboro;
-            chartArea1.AxisX.MajorTickMark.Enabled = false;
-            chartArea1.AxisX2.LineColor = System.Drawing.Color.DimGray;
-            chartArea1.AxisX2.MajorGrid.LineColor = System.Drawing.Color.Gainsboro;
-            chartArea1.AxisX2.MajorTickMark.Enabled = false;
-            chartArea1.AxisY.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
-            chartArea1.AxisY.LabelAutoFitMaxFontSize = 8;
-            chartArea1.AxisY.LabelStyle.Interval = 0D;
-            chartArea1.AxisY.LineColor = System.Drawing.Color.DimGray;
-            chartArea1.AxisY.MajorGrid.LineColor = System.Drawing.Color.Gainsboro;
-            chartArea1.AxisY.MajorTickMark.Enabled = false;
-            chartArea1.AxisY2.LineColor = System.Drawing.Color.DimGray;
-            chartArea1.AxisY2.MajorGrid.LineColor = System.Drawing.Color.Gainsboro;
-            chartArea1.AxisY2.MajorTickMark.Enabled = false;
-            chartArea1.AxisY2.Minimum = 0D;
-            chartArea1.Name = "ChartArea1";
-            this.TrafficChart.ChartAreas.Add(chartArea1);
+            chartArea2.AxisX.LabelStyle.Enabled = false;
+            chartArea2.AxisX.LineColor = System.Drawing.Color.DimGray;
+            chartArea2.AxisX.MajorGrid.Interval = 3D;
+            chartArea2.AxisX.MajorGrid.LineColor = System.Drawing.Color.Gainsboro;
+            chartArea2.AxisX.MajorTickMark.Enabled = false;
+            chartArea2.AxisX2.LineColor = System.Drawing.Color.DimGray;
+            chartArea2.AxisX2.MajorGrid.LineColor = System.Drawing.Color.Gainsboro;
+            chartArea2.AxisX2.MajorTickMark.Enabled = false;
+            chartArea2.AxisY.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
+            chartArea2.AxisY.LabelAutoFitMaxFontSize = 8;
+            chartArea2.AxisY.LabelStyle.Interval = 0D;
+            chartArea2.AxisY.LineColor = System.Drawing.Color.DimGray;
+            chartArea2.AxisY.MajorGrid.LineColor = System.Drawing.Color.Gainsboro;
+            chartArea2.AxisY.MajorTickMark.Enabled = false;
+            chartArea2.AxisY2.LineColor = System.Drawing.Color.DimGray;
+            chartArea2.AxisY2.MajorGrid.LineColor = System.Drawing.Color.Gainsboro;
+            chartArea2.AxisY2.MajorTickMark.Enabled = false;
+            chartArea2.AxisY2.Minimum = 0D;
+            chartArea2.Name = "ChartArea1";
+            this.TrafficChart.ChartAreas.Add(chartArea2);
             this.TrafficChart.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend1.Font = new System.Drawing.Font("Consolas", 8F);
-            legend1.IsTextAutoFit = false;
-            legend1.MaximumAutoSize = 80F;
-            legend1.Name = "Legend1";
-            this.TrafficChart.Legends.Add(legend1);
+            legend2.Font = new System.Drawing.Font("Consolas", 8F);
+            legend2.IsTextAutoFit = false;
+            legend2.MaximumAutoSize = 80F;
+            legend2.Name = "Legend1";
+            this.TrafficChart.Legends.Add(legend2);
             this.TrafficChart.Location = new System.Drawing.Point(0, 0);
             this.TrafficChart.Name = "TrafficChart";
             this.TrafficChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.Font = new System.Drawing.Font("Consolas", 8F);
-            series1.IsXValueIndexed = true;
-            series1.Legend = "Legend1";
-            series1.Name = "Inbound";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series2.Font = new System.Drawing.Font("Consolas", 8F);
-            series2.IsXValueIndexed = true;
-            series2.Legend = "Legend1";
-            series2.Name = "Outbound";
-            this.TrafficChart.Series.Add(series1);
-            this.TrafficChart.Series.Add(series2);
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series3.Font = new System.Drawing.Font("Consolas", 8F);
+            series3.IsXValueIndexed = true;
+            series3.Legend = "Legend1";
+            series3.Name = "Inbound";
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series4.Font = new System.Drawing.Font("Consolas", 8F);
+            series4.IsXValueIndexed = true;
+            series4.Legend = "Legend1";
+            series4.Name = "Outbound";
+            this.TrafficChart.Series.Add(series3);
+            this.TrafficChart.Series.Add(series4);
             this.TrafficChart.Size = new System.Drawing.Size(551, 58);
             this.TrafficChart.TabIndex = 0;
             this.TrafficChart.Text = "Traffic Chart";
@@ -324,6 +325,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.chkUseProxy);
             this.groupBox1.Controls.Add(this.txSocks5);
             this.groupBox1.Controls.Add(this.label6);
@@ -463,6 +465,15 @@
             this.chkUseProxy.Text = "Use Proxy";
             this.chkUseProxy.UseVisualStyleBackColor = true;
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(397, 51);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(89, 12);
+            this.label8.TabIndex = 12;
+            this.label8.Text = "(Only for TCP)";
+            // 
             // TrafficStatisticsPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -525,5 +536,6 @@
         private System.Windows.Forms.TextBox txSocks5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.CheckBox chkUseProxy;
+        private System.Windows.Forms.Label label8;
     }
 }
