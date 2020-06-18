@@ -172,13 +172,21 @@ namespace TrafficStatistics.Relay
                 try
                 {
                     var len = _remote.EndReceive(ar);
-                    if (len == 2 && remoteRecvBuffer[0] == 0x05 && remoteRecvBuffer[1] == 0x00)
+                    if (len == 2)
                     {
-                        var bytes = (byte[])((object[])ar.AsyncState)[0];
-                        var bytesLen = (int)((object[])ar.AsyncState)[1];
-                        _remote.BeginSend(bytes, 2, bytesLen - 2,
-                            SocketFlags.None,
-                            new AsyncCallback(Socks5Handshake2SendCallback), ar.AsyncState);
+                        if (remoteRecvBuffer[0] == 0x05 && remoteRecvBuffer[1] == 0x00)
+                        {
+                            var bytes = (byte[])((object[])ar.AsyncState)[0];
+                            var bytesLen = (int)((object[])ar.AsyncState)[1];
+                            _remote.BeginSend(bytes, 2, bytesLen - 2,
+                                SocketFlags.None,
+                                new AsyncCallback(Socks5Handshake2SendCallback), ar.AsyncState);
+                        }
+                        else
+                        {
+                            _relay.onWriteLog(new WriteLogEventArgs($"{_id}: 代理需要认证\r\n"));
+                            this.Close();
+                        }
                     }
                     else
                     {
@@ -229,11 +237,19 @@ namespace TrafficStatistics.Relay
                 try
                 {
                     var len = _remote.EndReceive(ar);
-                    if (len > 2 && remoteRecvBuffer[0] == 0x05 && remoteRecvBuffer[1] == 0x00)
+                    if (len > 2)
                     {
-                        _relay.onWriteLog(new WriteLogEventArgs($"{_id}: 已通过代理连接 {_remoteEP}，耗时 {Environment.TickCount - _remoteTime} 毫秒\r\n"));
-                        _remoteTime = Environment.TickCount;
-                        StartPipe();
+                        if (remoteRecvBuffer[0] == 0x05 && remoteRecvBuffer[1] == 0x00)
+                        {
+                            _relay.onWriteLog(new WriteLogEventArgs($"{_id}: 已通过代理连接 {_remoteEP}，耗时 {Environment.TickCount - _remoteTime} 毫秒\r\n"));
+                            _remoteTime = Environment.TickCount;
+                            StartPipe();
+                        }
+                        else
+                        {
+                            _relay.onWriteLog(new WriteLogEventArgs($"{_id}: 代理连接失败\r\n"));
+                            this.Close();
+                        }
                     }
                     else
                     {
