@@ -81,6 +81,8 @@ namespace TrafficStatistics.Relay
                 }
             }
 
+            private int SOCKS5_FIRST_PACKAGE_SIZE = 3;
+
             private void ConnectCallback(IAsyncResult ar)
             {
                 if (_closed)
@@ -97,7 +99,9 @@ namespace TrafficStatistics.Relay
                         var bytes = new byte[256];
                         var i = 0;
                         bytes[i++] = 0x05;
+                        bytes[i++] = 0x01;
                         bytes[i++] = 0x00;
+                        SOCKS5_FIRST_PACKAGE_SIZE = i;
                         bytes[i++] = 0x05;
                         bytes[i++] = 0x01;
                         bytes[i++] = 0x00;
@@ -120,7 +124,7 @@ namespace TrafficStatistics.Relay
                             bytes[i++] = (byte)((port >> 0) & 0xFF);
                         }
 
-                        _remote.BeginSend(bytes, 0, 2,
+                        _remote.BeginSend(bytes, 0, SOCKS5_FIRST_PACKAGE_SIZE,
                             SocketFlags.None,
                             new AsyncCallback(Socks5Handshake1SendCallback),
                             new object[] { bytes, i });
@@ -146,7 +150,7 @@ namespace TrafficStatistics.Relay
                 try
                 {
                     var len = _remote.EndSend(ar);
-                    if (len == 2)
+                    if (len == SOCKS5_FIRST_PACKAGE_SIZE)
                     {
                         _remote.BeginReceive(remoteRecvBuffer, 0, 2, 0,
                             new AsyncCallback(Socks5Handshake1RecvCallback), ar.AsyncState);
@@ -178,7 +182,9 @@ namespace TrafficStatistics.Relay
                         {
                             var bytes = (byte[])((object[])ar.AsyncState)[0];
                             var bytesLen = (int)((object[])ar.AsyncState)[1];
-                            _remote.BeginSend(bytes, 2, bytesLen - 2,
+                            _remote.BeginSend(bytes, 
+                                SOCKS5_FIRST_PACKAGE_SIZE,
+                                bytesLen - SOCKS5_FIRST_PACKAGE_SIZE,
                                 SocketFlags.None,
                                 new AsyncCallback(Socks5Handshake2SendCallback), ar.AsyncState);
                         }
@@ -211,7 +217,7 @@ namespace TrafficStatistics.Relay
                     var bytes = (byte[])((object[])ar.AsyncState)[0];
                     var bytesLen = (int)((object[])ar.AsyncState)[1];
                     var len = _remote.EndSend(ar);
-                    if (len == bytesLen - 2)
+                    if (len == bytesLen - SOCKS5_FIRST_PACKAGE_SIZE)
                     {
                         _remote.BeginReceive(remoteRecvBuffer, 0, RecvSize, 0,
                             new AsyncCallback(Socks5Handshake2RecvCallback), ar.AsyncState);
