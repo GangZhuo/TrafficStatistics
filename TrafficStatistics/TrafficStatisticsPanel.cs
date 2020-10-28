@@ -23,6 +23,8 @@ namespace TrafficStatistics
         private bool printPayload;
         private int payloadType = -1;
 
+        public bool AutoStart { get; set; }
+
         public ItemInfo ItemInfo { get; set; }
 
         public TrafficStatisticsPanel()
@@ -73,6 +75,20 @@ namespace TrafficStatistics
             {
                 MessageBox.Show(ex.Message);
             }
+
+            if (AutoStart)
+            {
+                Task.Delay(1000).ContinueWith(t => {
+                    try
+                    {
+                        Invoke(new Action(Start));
+                    }
+                    catch(Exception ex)
+                    {
+                        Console.WriteLine($"{ex}");
+                    }
+                });
+            }
         }
 
         protected override void OnHandleDestroyed(EventArgs e)
@@ -88,12 +104,7 @@ namespace TrafficStatistics
         {
             try
             {
-                Start(
-                    LeftAddressTextBox.Text,
-                    RightTextBox.Text,
-                    TypeComboBox.SelectedItem.ToString() == "UDP",
-                    txSocks5.Text,
-                    chkUseProxy.Checked);
+                Start();
             }
             catch (Exception ex)
             {
@@ -183,6 +194,16 @@ namespace TrafficStatistics
             return ep;
         }
 
+        public void Start()
+        {
+            Start(
+                LeftAddressTextBox.Text,
+                RightTextBox.Text,
+                TypeComboBox.SelectedItem.ToString() == "UDP",
+                txSocks5.Text,
+                chkUseProxy.Checked);
+        }
+
         private void Start(string leftAddr, string rightAddr, bool udp, string socks5Addr, bool useProxy)
         {
             EndPoint left = ParseEndPoint(leftAddr);
@@ -204,10 +225,10 @@ namespace TrafficStatistics
             StartButton.Enabled = false;
             StopButton.Enabled = true;
 
-            AppendLog($"Start [{(udp ? "UDP" : "TCP")}] local: {left}, remote: {right}\n");
+            AppendLog($"Start [{(udp ? "UDP" : "TCP")}] local: {left}, remote: {right}\r\n");
         }
 
-        private void Stop()
+        public void Stop()
         {
             if (relay != null)
             {
@@ -221,7 +242,7 @@ namespace TrafficStatistics
             StartButton.Enabled = true;
             StopButton.Enabled = false;
 
-            AppendLog($"Stop\n");
+            AppendLog($"Stop\r\n");
         }
 
         private void Relay_Inbound(object sender, RelayEventArgs e)
@@ -229,13 +250,16 @@ namespace TrafficStatistics
             rawTrafficStatistics.onInbound(e.Length);
             if (printPayload)
             {
+                string str = GetBufferHexString(e.Buffer, e.Offset, e.Length);
                 if (payloadType != 0)
                 {
-                    AppendLog($"\n================[Inbound]================\n");
+                    AppendLog($"\r\n================[Inbound]================\r\n{str}\r\n");
                     payloadType = 0;
                 }
-                string str = Encoding.UTF8.GetString(e.Buffer, e.Offset, e.Length);
-                AppendLog(str);
+                else
+                {
+                    AppendLog($"\r\n{str}\r\n");
+                }
             }
         }
 
@@ -244,13 +268,16 @@ namespace TrafficStatistics
             rawTrafficStatistics.onOutbound(e.Length);
             if (printPayload)
             {
+                string str = GetBufferHexString(e.Buffer, e.Offset, e.Length);
                 if (payloadType != 1)
                 {
-                    AppendLog($"\n================[Outbound]================\n");
+                    AppendLog($"\r\n================[Outbound]================\r\n{str}\r\n");
                     payloadType = 1;
                 }
-                string str = Encoding.UTF8.GetString(e.Buffer, e.Offset, e.Length);
-                AppendLog(str);
+                else
+                {
+                    AppendLog($"\r\n{str}\r\n");
+                }
             }
         }
 
@@ -272,13 +299,19 @@ namespace TrafficStatistics
             {
                 LogTextBox.Invoke(new EventHandler((s, e) =>
                 {
-                    LogTextBox.AppendText(text);
+                    lock (LogTextBox)
+                    {
+                        LogTextBox.AppendText(text);
+                    }
                     LogTextBox.ScrollToCaret();
                 }), this, null);
             }
             else
             {
-                LogTextBox.AppendText(text);
+                lock (LogTextBox)
+                {
+                    LogTextBox.AppendText(text);
+                }
                 LogTextBox.ScrollToCaret();
             }
         }
@@ -357,6 +390,64 @@ namespace TrafficStatistics
         {
             RawInbound.Text = new FormattedSize(rawTrafficStatistics.inbound).ToString();
             RawOutbound.Text = new FormattedSize(rawTrafficStatistics.outbound).ToString();
+        }
+
+        static string GetBufferHexString(byte[] buffer, int offset, int length)
+        {
+            var sb = new StringBuilder();
+            byte[] line = new byte[16];
+            var linePos = 0;
+
+            var chr = new Func<byte, char>(b =>
+            {
+                if (b >= 32 && b < 127) return (char)b;
+                return '?';
+            });
+
+            var str = new Func<byte[], int, string>((bs, ll) =>
+            {
+                var s = new StringBuilder();
+                for (int ii = 0; ii < ll; ii++) s.Append(chr(bs[ii]));
+                return s.ToString();
+            });
+
+            for (int i = offset, end = offset + length; i < end; i++)
+            {
+                if (linePos % 16 == 0)
+                {
+                    if (linePos > 0) sb.AppendLine(str(line, linePos));
+                    sb.Append($"{(i - offset).ToString("X").PadLeft(8, '0')} ");
+                    line = new byte[16];
+                    linePos = 0;
+                }
+                else if (linePos % 8 == 0)
+                {
+                    sb.Append(" ");
+                }
+
+                try
+                {
+                    line[linePos++] = buffer[i];
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
+                sb.Append($"{buffer[i].ToString("X").PadLeft(2, '0')} ");
+            }
+
+            for (var i = linePos; i < 16; i++)
+            {
+                sb.Append("   ");
+            }
+
+            if (linePos > 0)
+            {
+                sb.Append(str(line, linePos));
+            }
+
+            return sb.ToString().Trim();
         }
 
         class FormattedSize
@@ -445,7 +536,7 @@ namespace TrafficStatistics
 
             public override void WriteLine(string value)
             {
-                Write($"{value}\n");
+                Write($"{value}\r\n");
             }
 
             public override void Write(string value)

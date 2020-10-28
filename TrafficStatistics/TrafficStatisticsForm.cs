@@ -46,6 +46,22 @@ namespace TrafficStatistics
                 _SelectedItem = (listView1.SelectedItems != null && listView1.SelectedItems.Count > 0)
                     ? listView1.SelectedItems[0] : null;
                 btnEdit.Enabled = btnDelete.Enabled = _SelectedItem != null;
+
+                var info = _SelectedItem?.Tag as ItemInfo;
+
+                if (info != null)
+                {
+                    // highlight tab
+                    foreach (TabPage tabPage in this.tabControl1.TabPages)
+                    {
+                        TrafficStatisticsPanel body = (TrafficStatisticsPanel)tabPage.Controls[0];
+                        if (body.ItemInfo == info)
+                        {
+                            this.tabControl1.SelectedTab = tabPage;
+                            break;
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -220,6 +236,75 @@ namespace TrafficStatistics
                     lvitem.Tag = info;
                     this.listView1.Items.Add(lvitem);
                 }
+            }
+        }
+
+        private void btnStartAll_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var errors = new StringBuilder();
+                foreach (ListViewItem lvitem in this.listView1.Items)
+                {
+                    ItemInfo info = (ItemInfo)lvitem.Tag;
+                    try
+                    {
+                        var tabPage = new TabPage($"{info.Protocol}:{info.LocalAddress}");
+                        var body = new TrafficStatisticsPanel();
+                        body.ItemInfo = info;
+                        body.AutoStart = true;
+                        body.Dock = DockStyle.Fill;
+                        tabPage.Controls.Add(body);
+                        tabControl1.TabPages.Add(tabPage);
+                    }
+                    catch (Exception ex)
+                    {
+                        errors.AppendLine($"{info.Protocol}:{info.LocalAddress} 出错: {ex.Message}");
+                    }
+                }
+
+                if (errors.Length > 0)
+                {
+                    MessageBox.Show(errors.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnStopAll_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var errors = new StringBuilder();
+                foreach (TabPage tabPage in this.tabControl1.TabPages)
+                {
+                    TrafficStatisticsPanel body = (TrafficStatisticsPanel)tabPage.Controls[0];
+                    try
+                    {
+                        body.Stop();
+                    }
+                    catch (Exception ex)
+                    {
+                        errors.AppendLine($"{tabPage.Text} 出错: {ex.Message}");
+                    }
+                }
+
+                if (errors.Length > 0)
+                {
+                    MessageBox.Show(errors.ToString());
+                }
+                else
+                {
+                    this.tabControl1.TabPages.Clear();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
     }

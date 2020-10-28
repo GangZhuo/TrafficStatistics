@@ -37,6 +37,8 @@
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panel3 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -44,8 +46,8 @@
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
             this.tabControl1 = new TrafficStatistics.MyTabControl();
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.btnStartAll = new System.Windows.Forms.Button();
+            this.btnStopAll = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -92,9 +94,9 @@
             this.panel2.Controls.Add(this.panel4);
             this.panel2.Controls.Add(this.panel3);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(3, 50);
+            this.panel2.Location = new System.Drawing.Point(3, 51);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(339, 584);
+            this.panel2.Size = new System.Drawing.Size(339, 583);
             this.panel2.TabIndex = 2;
             // 
             // panel4
@@ -103,7 +105,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(339, 559);
+            this.panel4.Size = new System.Drawing.Size(339, 558);
             this.panel4.TabIndex = 2;
             // 
             // listView1
@@ -123,7 +125,7 @@
             this.listView1.Location = new System.Drawing.Point(0, 0);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(339, 559);
+            this.listView1.Size = new System.Drawing.Size(339, 558);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -145,11 +147,22 @@
             this.columnHeader3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.columnHeader3.Width = 120;
             // 
+            // columnHeader4
+            // 
+            this.columnHeader4.Text = "Socks5";
+            this.columnHeader4.Width = 120;
+            // 
+            // columnHeader5
+            // 
+            this.columnHeader5.Text = "Use Proxy";
+            this.columnHeader5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader5.Width = 80;
+            // 
             // panel3
             // 
             this.panel3.Controls.Add(this.label1);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel3.Location = new System.Drawing.Point(0, 559);
+            this.panel3.Location = new System.Drawing.Point(0, 558);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(339, 25);
             this.panel3.TabIndex = 1;
@@ -160,17 +173,19 @@
             this.label1.ForeColor = System.Drawing.Color.Blue;
             this.label1.Location = new System.Drawing.Point(4, 7);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(245, 12);
+            this.label1.Size = new System.Drawing.Size(181, 12);
             this.label1.TabIndex = 0;
             this.label1.Text = "Double click to open a statistics panel.";
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnStopAll);
+            this.panel1.Controls.Add(this.btnStartAll);
             this.panel1.Controls.Add(this.btnDelete);
             this.panel1.Controls.Add(this.btnEdit);
             this.panel1.Controls.Add(this.btnAdd);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(3, 17);
+            this.panel1.Location = new System.Drawing.Point(3, 18);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(339, 33);
             this.panel1.TabIndex = 1;
@@ -215,20 +230,30 @@
             this.tabControl1.ItemSize = new System.Drawing.Size(50, 25);
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
+            this.tabControl1.Padding = new System.Drawing.Point(14, 3);
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(808, 637);
             this.tabControl1.TabIndex = 0;
             // 
-            // columnHeader4
+            // btnStartAll
             // 
-            this.columnHeader4.Text = "Socks5";
-            this.columnHeader4.Width = 120;
+            this.btnStartAll.Location = new System.Drawing.Point(6, 4);
+            this.btnStartAll.Name = "btnStartAll";
+            this.btnStartAll.Size = new System.Drawing.Size(53, 23);
+            this.btnStartAll.TabIndex = 1;
+            this.btnStartAll.Text = "Start All";
+            this.btnStartAll.UseVisualStyleBackColor = true;
+            this.btnStartAll.Click += new System.EventHandler(this.btnStartAll_Click);
             // 
-            // columnHeader5
+            // btnStopAll
             // 
-            this.columnHeader5.Text = "Use Proxy";
-            this.columnHeader5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader5.Width = 80;
+            this.btnStopAll.Location = new System.Drawing.Point(65, 5);
+            this.btnStopAll.Name = "btnStopAll";
+            this.btnStopAll.Size = new System.Drawing.Size(53, 23);
+            this.btnStopAll.TabIndex = 2;
+            this.btnStopAll.Text = "Stop All";
+            this.btnStopAll.UseVisualStyleBackColor = true;
+            this.btnStopAll.Click += new System.EventHandler(this.btnStopAll_Click);
             // 
             // TrafficStatisticsForm
             // 
@@ -276,5 +301,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.ColumnHeader columnHeader5;
+        private System.Windows.Forms.Button btnStopAll;
+        private System.Windows.Forms.Button btnStartAll;
     }
 }
