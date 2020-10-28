@@ -25,6 +25,7 @@ namespace TrafficStatistics
             this.DrawMode = TabDrawMode.OwnerDrawFixed;
             icon = Properties.Resources.close_16x16;
             iconWidth = icon.Width; iconHeight = icon.Height;
+            this.Padding = new Point(Padding.X + icon.Width / 2 + 2, Padding.Y);
         }
 
         /// <summary>
