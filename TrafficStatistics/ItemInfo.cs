@@ -19,5 +19,7 @@ namespace TrafficStatistics
         public string Socks5Address { get; set; }
 
         public bool UseSocks5Proxy { get; set; }
+
+        public int ChartRange { get; set; }
     }
 }

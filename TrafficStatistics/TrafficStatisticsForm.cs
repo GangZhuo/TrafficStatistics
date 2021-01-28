@@ -197,6 +197,7 @@ namespace TrafficStatistics
                 xelem.Add(new XAttribute("print", info.PrintPayload ? "true" : "false"));
                 xelem.Add(new XAttribute("socks5", info.Socks5Address));
                 xelem.Add(new XAttribute("proxy", info.UseSocks5Proxy ? "true" : "false"));
+                xelem.Add(new XAttribute("chart", info.ChartRange));
 
                 xroot.Add(xelem);
             }
@@ -212,6 +213,12 @@ namespace TrafficStatistics
             var filename = "item.xml";
             if (File.Exists(filename))
             {
+                var toInt = new Func<string, int>((x) => {
+                    int iv;
+                    if (!string.IsNullOrEmpty(x) && int.TryParse(x, out iv))
+                        return iv;
+                    return 0;
+                });
                 var xdoc = XDocument.Load(filename);
                 var list = xdoc.Root.Elements().Where(x => x.Name == "item")
                     .Select(x => new ItemInfo
@@ -222,6 +229,7 @@ namespace TrafficStatistics
                         PrintPayload = x.Attribute("print").Value == "true",
                         Socks5Address = x.Attribute("socks5")?.Value ?? "127.0.0.1:1080",
                         UseSocks5Proxy = x.Attribute("proxy")?.Value == "true",
+                        ChartRange = toInt(x.Attribute("chart")?.Value),
                     });
                 listView1.Items.Clear();
                 foreach(ItemInfo info in list)

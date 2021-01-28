@@ -51,7 +51,14 @@ namespace TrafficStatistics
 
 #endif
 
-                ChartComboBox.SelectedIndex = 0;
+                if (ItemInfo != null && ItemInfo.ChartRange >= 0 && ItemInfo.ChartRange < ChartComboBox.Items.Count)
+                {
+                    ChartComboBox.SelectedIndex = ItemInfo.ChartRange;
+                }
+                else
+                {
+                    ChartComboBox.SelectedIndex = 0;
+                }
 
                 TypeComboBox.SelectedItem = ItemInfo?.Protocol ?? TypeComboBox.Items[0];
                 printPayload = ItemInfo?.PrintPayload ?? false;
