@@ -252,13 +252,13 @@ namespace TrafficStatistics
                 string str = GetBufferHexString(e.Buffer, e.Offset, e.Length);
                 if (e.SockAction == RelaySockAction.Recv)
                 {
-                    AppendLog($"\r\n[{e.SockType}] recv {e.Length} bytes from {(e.EndPoint == null ? e.Sock.RemoteEndPoint : e.EndPoint)}\r\n" +
+                    AppendLog($"\r\n{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")} [{e.SockType}] recv {e.Length} bytes from {(e.EndPoint == null ? e.Sock.RemoteEndPoint : e.EndPoint)}\r\n" +
                         $"--------------------------------------------------------------------------\r\n" +
                         $"{str}\r\n");
                 }
                 else
                 {
-                    AppendLog($"\r\n[{e.SockType}] send {e.Length} bytes to {(e.EndPoint == null ? e.Sock.RemoteEndPoint : e.EndPoint)}\r\n" +
+                    AppendLog($"\r\n{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")} [{e.SockType}] send {e.Length} bytes to {(e.EndPoint == null ? e.Sock.RemoteEndPoint : e.EndPoint)}\r\n" +
                        $"--------------------------------------------------------------------------\r\n" +
                        $"{str}\r\n");
                 }
