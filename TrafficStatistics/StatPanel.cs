@@ -12,7 +12,8 @@ namespace TrafficStatistics
 {
     public partial class StatPanel : UserControl
     {
-        private LinkedList<TrafficLog> trafficLogList = new LinkedList<TrafficLog>();
+        private Traffic traffic = new Traffic();
+        private LinkedList<TrafficLog> logList = new LinkedList<TrafficLog>();
         private List<float> inboundPoints = new List<float>();
         private List<float> outboundPoints = new List<float>();
         private FormattedSize maxSpeed;
@@ -25,7 +26,7 @@ namespace TrafficStatistics
 
             for (int i = 0; i < trafficLogSize; i++)
             {
-                trafficLogList.AddLast(new TrafficLog());
+                logList.AddLast(new TrafficLog());
             }
         }
 
@@ -41,12 +42,12 @@ namespace TrafficStatistics
 
         public void InitTrafficHistoricalList()
         {
-            lock (trafficLogList)
+            lock (logList)
             {
-                trafficLogList.Clear();
+                logList.Clear();
                 for (int i = 0; i < trafficLogSize; i++)
                 {
-                    trafficLogList.AddLast(new TrafficLog());
+                    logList.AddLast(new TrafficLog());
                 }
             }
         }
@@ -57,25 +58,26 @@ namespace TrafficStatistics
             inboundPoints.Clear();
             outboundPoints.Clear();
 
-            lock (trafficLogList)
+            lock (logList)
             {
                 if (traffic != null)
                 {
+                    this.traffic = traffic;
                     #region Add to trafficLogList
-                    TrafficLog previous = trafficLogList.Last.Value;
+                    TrafficLog previous = logList.Last.Value;
                     TrafficLog current = new TrafficLog(
                         new Traffic(traffic),
                         new Traffic(traffic, previous.total)
                     );
-                    trafficLogList.AddLast(current);
+                    logList.AddLast(current);
 
-                    while (trafficLogList.Count > trafficLogSize) trafficLogList.RemoveFirst();
-                    while (trafficLogList.Count < trafficLogSize) trafficLogList.AddFirst(new TrafficLog());
+                    while (logList.Count > trafficLogSize) logList.RemoveFirst();
+                    while (logList.Count < trafficLogSize) logList.AddFirst(new TrafficLog());
                     #endregion
                 }
 
-                lastLog = trafficLogList.Last.Value;
-                foreach (TrafficLog item in trafficLogList)
+                lastLog = logList.Last.Value;
+                foreach (TrafficLog item in logList)
                 {
                     inboundPoints.Add(item.speed.inbound);
                     outboundPoints.Add(item.speed.outbound);
@@ -106,6 +108,9 @@ namespace TrafficStatistics
 
         private void UpdateTrafficChart()
         {
+            lbRecvTotal.Text = new FormattedSize(traffic.inbound).ToString();
+            lbSendTotal.Text = new FormattedSize(traffic.outbound).ToString();
+
             TrafficChart.Series["Inbound"].LegendText = "Inbound (" + new FormattedSize(lastLog.speed.inbound) + "/s)";
             TrafficChart.Series["Outbound"].LegendText = "Outbound (" + new FormattedSize(lastLog.speed.outbound) + "/s)";
 

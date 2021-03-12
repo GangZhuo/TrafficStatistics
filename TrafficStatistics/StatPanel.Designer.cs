@@ -34,94 +34,75 @@ namespace TrafficStatistics
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.lbSendSpeed = new System.Windows.Forms.Label();
             this.lbSendTotal = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.lbRecvSpeed = new System.Windows.Forms.Label();
             this.lbRecvTotal = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.TrafficChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TrafficChart)).BeginInit();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.lbSendSpeed);
-            this.panel1.Controls.Add(this.lbSendTotal);
-            this.panel1.Controls.Add(this.label4);
-            this.panel1.Controls.Add(this.lbRecvSpeed);
-            this.panel1.Controls.Add(this.lbRecvTotal);
-            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.tableLayoutPanel1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(536, 55);
+            this.panel1.Size = new System.Drawing.Size(536, 21);
             this.panel1.TabIndex = 0;
-            // 
-            // lbSendSpeed
-            // 
-            this.lbSendSpeed.AutoSize = true;
-            this.lbSendSpeed.Location = new System.Drawing.Point(222, 32);
-            this.lbSendSpeed.Name = "lbSendSpeed";
-            this.lbSendSpeed.Size = new System.Drawing.Size(33, 12);
-            this.lbSendSpeed.TabIndex = 14;
-            this.lbSendSpeed.Text = "label2";
             // 
             // lbSendTotal
             // 
-            this.lbSendTotal.AutoSize = true;
-            this.lbSendTotal.Location = new System.Drawing.Point(222, 10);
+            this.lbSendTotal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbSendTotal.Location = new System.Drawing.Point(321, 0);
             this.lbSendTotal.Name = "lbSendTotal";
-            this.lbSendTotal.Size = new System.Drawing.Size(33, 12);
+            this.lbSendTotal.Size = new System.Drawing.Size(212, 21);
             this.lbSendTotal.TabIndex = 13;
             this.lbSendTotal.Text = "label2";
+            this.lbSendTotal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(174, 10);
+            this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label4.Location = new System.Drawing.Point(271, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(31, 12);
+            this.label4.Size = new System.Drawing.Size(44, 21);
             this.label4.TabIndex = 12;
             this.label4.Text = "Send:";
-            // 
-            // lbRecvSpeed
-            // 
-            this.lbRecvSpeed.AutoSize = true;
-            this.lbRecvSpeed.Location = new System.Drawing.Point(61, 32);
-            this.lbRecvSpeed.Name = "lbRecvSpeed";
-            this.lbRecvSpeed.Size = new System.Drawing.Size(33, 12);
-            this.lbRecvSpeed.TabIndex = 11;
-            this.lbRecvSpeed.Text = "label2";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lbRecvTotal
             // 
-            this.lbRecvTotal.AutoSize = true;
-            this.lbRecvTotal.Location = new System.Drawing.Point(61, 10);
+            this.lbRecvTotal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbRecvTotal.Location = new System.Drawing.Point(53, 0);
             this.lbRecvTotal.Name = "lbRecvTotal";
-            this.lbRecvTotal.Size = new System.Drawing.Size(33, 12);
+            this.lbRecvTotal.Size = new System.Drawing.Size(212, 21);
             this.lbRecvTotal.TabIndex = 10;
             this.lbRecvTotal.Text = "label2";
+            this.lbRecvTotal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 10);
+            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label1.Location = new System.Drawing.Point(3, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(32, 12);
+            this.label1.Size = new System.Drawing.Size(44, 21);
             this.label1.TabIndex = 9;
             this.label1.Text = "Recv:";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // panel2
             // 
             this.panel2.Controls.Add(this.TrafficChart);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 55);
+            this.panel2.Location = new System.Drawing.Point(0, 21);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(536, 297);
+            this.panel2.Size = new System.Drawing.Size(536, 331);
             this.panel2.TabIndex = 1;
             // 
             // TrafficChart
@@ -172,9 +153,28 @@ namespace TrafficStatistics
             series2.Name = "Outbound";
             this.TrafficChart.Series.Add(series1);
             this.TrafficChart.Series.Add(series2);
-            this.TrafficChart.Size = new System.Drawing.Size(536, 297);
+            this.TrafficChart.Size = new System.Drawing.Size(536, 331);
             this.TrafficChart.TabIndex = 1;
             this.TrafficChart.Text = "Traffic Chart";
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 4;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.lbSendTotal, 3, 0);
+            this.tableLayoutPanel1.Controls.Add(this.lbRecvTotal, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label4, 2, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(536, 21);
+            this.tableLayoutPanel1.TabIndex = 14;
             // 
             // StatPanel
             // 
@@ -186,9 +186,9 @@ namespace TrafficStatistics
             this.Size = new System.Drawing.Size(536, 352);
             this.Load += new System.EventHandler(this.StatPanel_Load);
             this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.TrafficChart)).EndInit();
+            this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -199,10 +199,9 @@ namespace TrafficStatistics
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label lbRecvTotal;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label lbRecvSpeed;
-        private System.Windows.Forms.Label lbSendSpeed;
         private System.Windows.Forms.Label lbSendTotal;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.DataVisualization.Charting.Chart TrafficChart;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     }
 }

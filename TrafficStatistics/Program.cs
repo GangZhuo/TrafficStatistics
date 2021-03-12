@@ -26,6 +26,7 @@ namespace TrafficStatistics
             CreateTrayIcon();
             form = new TrafficStatisticsForm();
             form.FormClosing += MainForm_FormClosing;
+            form.FormClosed += Form_FormClosed;
             form.Show();
             form.Activate();
             Application.Run();
@@ -72,7 +73,6 @@ namespace TrafficStatistics
         {
             closing = true;
             form.Close();
-            Application.Exit();
         }
 
         private static void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -82,6 +82,13 @@ namespace TrafficStatistics
                 e.Cancel = true;
                 form.Hide();
             }
+        }
+
+        private static void Form_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            _notifyIcon.Visible = false;
+            _notifyIcon.Dispose();
+            Application.Exit();
         }
 
     }
