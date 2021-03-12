@@ -15,13 +15,12 @@ namespace TrafficStatistics
 {
     public partial class TrafficStatisticsPanel : UserControl
     {
-        private int trafficLogSize = 60;
 
         private IRelay relay;
         private Traffic localTrafficStatistics = new Traffic();
         private Traffic remoteTrafficStatistics = new Traffic();
-        private LinkedList<TrafficLog> trafficLogList = new LinkedList<TrafficLog>();
         private bool printPayload;
+        private bool updating;
 
         public bool AutoStart { get; set; }
 
@@ -37,8 +36,6 @@ namespace TrafficStatistics
                 items[i] = $"Display data for last {i + 1} minutes";
             }
             ChartComboBox.Items.AddRange(items);
-
-            InitTrafficHistoricalList();
         }
 
         private void TrafficStatisticsPanel_Load(object sender, EventArgs e)
@@ -76,7 +73,6 @@ namespace TrafficStatistics
             try
             {
                 timer1.Start();
-                timer2.Start();
             }
             catch (Exception ex)
             {
@@ -100,9 +96,8 @@ namespace TrafficStatistics
 
         protected override void OnHandleDestroyed(EventArgs e)
         {
-            timer1.Enabled = timer2.Enabled = false;
+            timer1.Enabled = false;
             timer1.Stop();
-            timer2.Stop();
             Stop();
             base.OnHandleDestroyed(e);
         }
@@ -135,39 +130,28 @@ namespace TrafficStatistics
         {
             localTrafficStatistics.reset();
             remoteTrafficStatistics.reset();
-            InitTrafficHistoricalList();
+            localStat.InitTrafficHistoricalList();
+            remoteStat.InitTrafficHistoricalList();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            UpdateTrafficStatistics();
-        }
-
-        private void timer2_Tick(object sender, EventArgs e)
-        {
             try
             {
-                timer2.Stop();
-                UpdateTrafficList();
-                if (TrafficChart.InvokeRequired)
-                {
-                    TrafficChart.Invoke(new EventHandler((sender2, e2) =>
-                    {
-                        UpdateTrafficChart();
-                    }), sender, e);
-                }
-                else
-                {
-                    UpdateTrafficChart();
-                }
+                if (this.Disposing || this.IsDisposed)
+                    return;
+                if (updating) return;
+                updating = true;
+                localStat.UpdateTrafficList(localTrafficStatistics);
+                remoteStat.UpdateTrafficList(remoteTrafficStatistics);
             }
             catch (Exception ex)
             {
-                string s = ex.Message;
+                AppendLog($"Error: {ex}\r\n");
             }
             finally
             {
-                timer2.Start();
+                updating = false;
             }
         }
 
@@ -178,7 +162,9 @@ namespace TrafficStatistics
 
         private void ChartComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            trafficLogSize = (ChartComboBox.SelectedIndex + 1) * 60;
+            int v = (ChartComboBox.SelectedIndex + 1) * 60;
+            localStat.SetXSize(v);
+            remoteStat.SetXSize(v);
         }
 
         private void PrintPayloadCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -254,6 +240,8 @@ namespace TrafficStatistics
 
         private void Relay_Relay(object sender, RelayEventArgs e)
         {
+            if (this.Disposing || this.IsDisposed)
+                return;
             Traffic t = e.SockType == RelaySockType.Local ? localTrafficStatistics : remoteTrafficStatistics;
             if (e.SockAction == RelaySockAction.Recv)
                 t.onRecv(e.Length);
@@ -291,6 +279,8 @@ namespace TrafficStatistics
 
         private void AppendLog(string text)
         {
+            if (this.Disposing || this.IsDisposed)
+                return;
             if (LogTextBox.InvokeRequired)
             {
                 LogTextBox.Invoke(new EventHandler((s, e) =>
@@ -310,82 +300,6 @@ namespace TrafficStatistics
                 }
                 LogTextBox.ScrollToCaret();
             }
-        }
-
-        private void InitTrafficHistoricalList()
-        {
-            lock (trafficLogList)
-            {
-                trafficLogList.Clear();
-                for (int i = 0; i < trafficLogSize; i++)
-                {
-                    trafficLogList.AddLast(new TrafficLog());
-                }
-            }
-        }
-
-        private void UpdateTrafficList()
-        {
-            lock (trafficLogList)
-            {
-                TrafficLog previous = trafficLogList.Last.Value;
-                TrafficLog current = new TrafficLog(
-                    new Traffic(localTrafficStatistics),
-                    new Traffic(localTrafficStatistics, previous.raw)
-                );
-                trafficLogList.AddLast(current);
-
-                while (trafficLogList.Count > trafficLogSize) trafficLogList.RemoveFirst();
-                while (trafficLogList.Count < trafficLogSize) trafficLogList.AddFirst(new TrafficLog());
-            }
-        }
-
-        private List<float> rawInboundPoints = new List<float>();
-        private List<float> rawOutboundPoints = new List<float>();
-        private string[] units = new string[] { "B", "KiB", "MiB", "GiB" };
-
-        private void UpdateTrafficChart()
-        {
-            TrafficLog last;
-            long maxSpeedValue = 0;
-            rawInboundPoints.Clear();
-            rawOutboundPoints.Clear();
-            lock (trafficLogList)
-            {
-                last = trafficLogList.Last.Value;
-                foreach (TrafficLog item in trafficLogList)
-                {
-                    rawInboundPoints.Add(item.rawSpeed.inbound);
-                    rawOutboundPoints.Add(item.rawSpeed.outbound);
-
-                    maxSpeedValue = Math.Max(maxSpeedValue,
-                            Math.Max(item.rawSpeed.inbound, item.rawSpeed.outbound)
-                    );
-                }
-            }
-
-            FormattedSize maxSpeed = new FormattedSize(maxSpeedValue);
-            RawInboundSpeed.Text = new FormattedSize(last.rawSpeed.inbound) + "/s";
-            RawOutboundSpeed.Text = new FormattedSize(last.rawSpeed.outbound) + "/s";
-
-            for (int i = 0; i < rawInboundPoints.Count; i++)
-            {
-                rawInboundPoints[i] /= maxSpeed.scale;
-                rawOutboundPoints[i] /= maxSpeed.scale;
-            }
-
-            TrafficChart.Series["Inbound"].Points.DataBindY(rawInboundPoints);
-            TrafficChart.Series["Outbound"].Points.DataBindY(rawOutboundPoints);
-            TrafficChart.Series["Inbound"].ToolTip = "#SERIESNAME #VALY{F2} " + maxSpeed.unit + "/s";
-            TrafficChart.Series["Outbound"].ToolTip = "#SERIESNAME #VALY{F2} " + maxSpeed.unit + "/s";
-            TrafficChart.ChartAreas[0].AxisY.LabelStyle.Format = "{0:0.##} " + maxSpeed.unit + "/s";
-
-        }
-
-        private void UpdateTrafficStatistics()
-        {
-            RawInbound.Text = new FormattedSize(localTrafficStatistics.inbound).ToString();
-            RawOutbound.Text = new FormattedSize(localTrafficStatistics.outbound).ToString();
         }
 
         static string GetBufferHexString(byte[] buffer, int offset, int length)
@@ -446,62 +360,6 @@ namespace TrafficStatistics
             return sb.ToString().Trim();
         }
 
-        class FormattedSize
-        {
-            public long rawValue;
-
-            public long scale;
-            public float value;
-            public string unit;
-
-            public FormattedSize() { }
-
-            public FormattedSize(long n)
-            {
-                FormatSize(n);
-            }
-
-            public void FormatSize(long n)
-            {
-                rawValue = n;
-                long scale = 1;
-                float f = n;
-                string unit = "B";
-                if (f > 1024)
-                {
-                    f = f / 1024;
-                    scale <<= 10;
-                    unit = "KiB";
-                }
-                if (f > 1024)
-                {
-                    f = f / 1024;
-                    scale <<= 10;
-                    unit = "MiB";
-                }
-                if (f > 1024)
-                {
-                    f = f / 1024;
-                    scale <<= 10;
-                    unit = "GiB";
-                }
-                if (f > 1024)
-                {
-                    f = f / 1024;
-                    scale <<= 10;
-                    unit = "TiB";
-                }
-                this.scale = scale;
-                this.value = f;
-                this.unit = unit;
-            }
-
-            public override string ToString()
-            {
-                return value.ToString("F2") + " " + unit;
-            }
-
-        }
 
 #if REDIRECT_CONSOLE
 

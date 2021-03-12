@@ -43,19 +43,19 @@ namespace TrafficStatistics
 
     public class TrafficLog
     {
-        public Traffic raw;
-        public Traffic rawSpeed;
+        public Traffic total;
+        public Traffic speed;
 
         public TrafficLog()
         {
-            raw = new Traffic();
-            rawSpeed = new Traffic();
+            total = new Traffic();
+            speed = new Traffic();
         }
 
-        public TrafficLog(Traffic raw, Traffic rawspeed)
+        public TrafficLog(Traffic total, Traffic speed)
         {
-            this.raw = raw;
-            this.rawSpeed = rawspeed;
+            this.total = total;
+            this.speed = speed;
         }
     }
 

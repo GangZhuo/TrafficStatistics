@@ -8,6 +8,7 @@ namespace TrafficStatistics.Relay
     {
         public class State
         {
+            public Socket sock;
             public byte[] buffer;
             public EndPoint remoteEP;
 
@@ -90,10 +91,13 @@ namespace TrafficStatistics.Relay
 
         private void localStartReceive()
         {
+            var sock = _local;
+            if (sock == null)
+                return;
             try
             {
-                State state = new State();
-                _local.BeginReceiveFrom(state.buffer, 0, state.buffer.Length, SocketFlags.None,
+                State state = new State() { sock = sock };
+                sock.BeginReceiveFrom(state.buffer, 0, state.buffer.Length, SocketFlags.None,
                     ref state.remoteEP, new AsyncCallback(localReceiveCallback), state);
             }
             catch (Exception e)
@@ -105,12 +109,13 @@ namespace TrafficStatistics.Relay
         private void localReceiveCallback(IAsyncResult ar)
         {
             State state = (State)ar.AsyncState;
+            var sock = state.sock;
             try
             {
-                int bytesRead = _local.EndReceiveFrom(ar, ref state.remoteEP);
-                var e = new RelayEventArgs(_local, RelaySockType.Local, RelaySockAction.Recv, state.remoteEP, state.buffer, 0, bytesRead);
+                int bytesRead = sock.EndReceiveFrom(ar, ref state.remoteEP);
+                var e = new RelayEventArgs(sock, RelaySockType.Local, RelaySockAction.Recv, state.remoteEP, state.buffer, 0, bytesRead);
                 onRelay(e);
-                if (_pipe.CreatePipe(state.buffer, bytesRead, _local, state.remoteEP))
+                if (_pipe.CreatePipe(state.buffer, bytesRead, sock, state.remoteEP))
                     return;
                 // do nothing
             }

@@ -56,6 +56,7 @@
     <Compile Include="AddForm.Designer.cs">
       <DependentUpon>AddForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormattedSize.cs" />
     <Compile Include="ItemInfo.cs" />
     <Compile Include="MyTabControl.cs">
       <SubType>Component</SubType>
@@ -67,6 +68,12 @@
     <Compile Include="Relay\TcpRelay.cs" />
     <Compile Include="Relay\UDPPipe.cs" />
     <Compile Include="Relay\UdpRelay.cs" />
+    <Compile Include="StatPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="StatPanel.Designer.cs">
+      <DependentUpon>StatPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="TrafficStatisticsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -93,6 +100,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="StatPanel.resx">
+      <DependentUpon>StatPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TrafficStatisticsForm.resx">
       <DependentUpon>TrafficStatisticsForm.cs</DependentUpon>
     </EmbeddedResource>

@@ -48,20 +48,7 @@ namespace TrafficStatistics
                 btnEdit.Enabled = btnDelete.Enabled = _SelectedItem != null;
 
                 var info = _SelectedItem?.Tag as ItemInfo;
-
-                if (info != null)
-                {
-                    // highlight tab
-                    foreach (TabPage tabPage in this.tabControl1.TabPages)
-                    {
-                        TrafficStatisticsPanel body = (TrafficStatisticsPanel)tabPage.Controls[0];
-                        if (body.ItemInfo == info)
-                        {
-                            this.tabControl1.SelectedTab = tabPage;
-                            break;
-                        }
-                    }
-                }
+                HighlightTab(info);
             }
             catch (Exception ex)
             {
@@ -83,6 +70,7 @@ namespace TrafficStatistics
                 body.Dock = DockStyle.Fill;
                 tabPage.Controls.Add(body);
                 tabControl1.TabPages.Add(tabPage);
+                HighlightTab(info);
             }
             catch (Exception ex)
             {
@@ -176,6 +164,23 @@ namespace TrafficStatistics
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void HighlightTab(ItemInfo info)
+        {
+            if (info == null)
+                return;
+
+            // highlight tab
+            foreach (TabPage tabPage in this.tabControl1.TabPages)
+            {
+                TrafficStatisticsPanel body = (TrafficStatisticsPanel)tabPage.Controls[0];
+                if (body.ItemInfo == info)
+                {
+                    this.tabControl1.SelectedTab = tabPage;
+                    break;
+                }
             }
         }
 
