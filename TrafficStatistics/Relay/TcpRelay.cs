@@ -15,8 +15,7 @@ namespace TrafficStatistics.Relay
         private EndPoint _socks5EP;
         private bool _useProxy;
 
-        public event EventHandler<RelayEventArgs> Inbound;
-        public event EventHandler<RelayEventArgs> Outbound;
+        public event EventHandler<RelayEventArgs> Relay;
         public event EventHandler<RelayErrorEventArgs> Error;
         public event EventHandler<WriteLogEventArgs> WriteLog;
 
@@ -59,14 +58,9 @@ namespace TrafficStatistics.Relay
             }
         }
 
-        public void onInbound(RelayEventArgs e)
+        public void onRelay(RelayEventArgs e)
         {
-            Inbound?.Invoke(this, e);
-        }
-
-        public void onOutbound(RelayEventArgs e)
-        {
-            Outbound?.Invoke(this, e);
+            Relay?.Invoke(this, e);
         }
 
         public void onError(RelayErrorEventArgs e)

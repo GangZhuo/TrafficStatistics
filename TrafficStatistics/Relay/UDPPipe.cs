@@ -241,9 +241,7 @@ namespace TrafficStatistics.Relay
                             _sending = true;
                             byte[] bytes = _packages.First.Value;
                             _packages.RemoveFirst();
-                            var e = new RelayEventArgs(bytes, 0, bytes.Length);
-                            _relay.onInbound(e);
-                            _remote.BeginSend(e.Buffer, e.Offset, e.Length, 0, new AsyncCallback(remoteSendCallback), null);
+                            _remote.BeginSend(bytes, 0, bytes.Length, 0, new AsyncCallback(remoteSendCallback), bytes);
                             Delay();
                         }
                     }
@@ -260,7 +258,10 @@ namespace TrafficStatistics.Relay
                 if (_closed) return;
                 try
                 {
+                    byte[] bytes = (byte[])ar.AsyncState;
                     _remote.EndSend(ar);
+                    var e = new RelayEventArgs(_remote, RelaySockType.Remote, RelaySockAction.Send, _remoteEP, bytes, 0, bytes.Length);
+                    _relay.onRelay(e);
                     lock (_packages)
                         _sending = false;
                     StartSend();
@@ -280,9 +281,9 @@ namespace TrafficStatistics.Relay
                     int bytesRead = _remote.EndReceive(ar);
                     if (bytesRead > 0)
                     {
-                        var e = new RelayEventArgs(remoteRecvBuffer, 0, bytesRead);
-                        _relay.onOutbound(e);
-                        _local.BeginSendTo(e.Buffer, 0, e.Length, 0, _localEP, new AsyncCallback(localSendCallback), null);
+                        var e = new RelayEventArgs(_remote, RelaySockType.Remote, RelaySockAction.Recv, _remoteEP, remoteRecvBuffer, 0, bytesRead);
+                        _relay.onRelay(e);
+                        _local.BeginSendTo(e.Buffer, 0, e.Length, 0, _localEP, new AsyncCallback(localSendCallback), e);
                         Delay();
                     }
                     else
@@ -303,7 +304,10 @@ namespace TrafficStatistics.Relay
                 if (_closed) return;
                 try
                 {
+                    RelayEventArgs buf = (RelayEventArgs)ar.AsyncState;
                     _local.EndSendTo(ar);
+                    var e = new RelayEventArgs(_local, RelaySockType.Local, RelaySockAction.Send, _localEP, buf.Buffer, buf.Offset, buf.Length);
+                    _relay.onRelay(e);
                     _remote.BeginReceive(this.remoteRecvBuffer, 0, RecvSize, 0,
                         new AsyncCallback(remoteReceiveCallback), null);
                     Delay();
@@ -319,7 +323,7 @@ namespace TrafficStatistics.Relay
             {
                 lock (this)
                 {
-                    _expires = DateTime.Now.AddMilliseconds(30000);
+                    _expires = DateTime.Now.AddSeconds(120);
                 }
             }
 

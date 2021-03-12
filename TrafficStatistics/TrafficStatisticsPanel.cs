@@ -18,10 +18,10 @@ namespace TrafficStatistics
         private int trafficLogSize = 60;
 
         private IRelay relay;
-        private Traffic rawTrafficStatistics = new Traffic();
+        private Traffic localTrafficStatistics = new Traffic();
+        private Traffic remoteTrafficStatistics = new Traffic();
         private LinkedList<TrafficLog> trafficLogList = new LinkedList<TrafficLog>();
         private bool printPayload;
-        private int payloadType = -1;
 
         public bool AutoStart { get; set; }
 
@@ -133,7 +133,8 @@ namespace TrafficStatistics
 
         private void ResetButton_Click(object sender, EventArgs e)
         {
-            rawTrafficStatistics.reset();
+            localTrafficStatistics.reset();
+            remoteTrafficStatistics.reset();
             InitTrafficHistoricalList();
         }
 
@@ -219,8 +220,7 @@ namespace TrafficStatistics
             relay = udp ?
                 (IRelay)new UDPRelay(left, right, socks5, useProxy) :
                 (IRelay)new TCPRelay(left, right, socks5, useProxy);
-            relay.Inbound += Relay_Inbound;
-            relay.Outbound += Relay_Outbound;
+            relay.Relay += Relay_Relay;
             relay.Error += Relay_Error;
             relay.WriteLog += Relay_WriteLog;
             
@@ -252,38 +252,27 @@ namespace TrafficStatistics
             AppendLog($"Stop\r\n");
         }
 
-        private void Relay_Inbound(object sender, RelayEventArgs e)
+        private void Relay_Relay(object sender, RelayEventArgs e)
         {
-            rawTrafficStatistics.onInbound(e.Length);
+            Traffic t = e.SockType == RelaySockType.Local ? localTrafficStatistics : remoteTrafficStatistics;
+            if (e.SockAction == RelaySockAction.Recv)
+                t.onRecv(e.Length);
+            else
+                t.onSend(e.Length);
             if (printPayload)
             {
                 string str = GetBufferHexString(e.Buffer, e.Offset, e.Length);
-                if (payloadType != 0)
+                if (e.SockAction == RelaySockAction.Recv)
                 {
-                    AppendLog($"\r\n================[Inbound]================\r\n{str}\r\n");
-                    payloadType = 0;
+                    AppendLog($"\r\n[{e.SockType}] recv {e.Length} bytes from {(e.EndPoint == null ? e.Sock.RemoteEndPoint : e.EndPoint)}\r\n" +
+                        $"--------------------------------------------------------------------------\r\n" +
+                        $"{str}\r\n");
                 }
                 else
                 {
-                    AppendLog($"\r\n{str}\r\n");
-                }
-            }
-        }
-
-        private void Relay_Outbound(object sender, RelayEventArgs e)
-        {
-            rawTrafficStatistics.onOutbound(e.Length);
-            if (printPayload)
-            {
-                string str = GetBufferHexString(e.Buffer, e.Offset, e.Length);
-                if (payloadType != 1)
-                {
-                    AppendLog($"\r\n================[Outbound]================\r\n{str}\r\n");
-                    payloadType = 1;
-                }
-                else
-                {
-                    AppendLog($"\r\n{str}\r\n");
+                    AppendLog($"\r\n[{e.SockType}] send {e.Length} bytes to {(e.EndPoint == null ? e.Sock.RemoteEndPoint : e.EndPoint)}\r\n" +
+                       $"--------------------------------------------------------------------------\r\n" +
+                       $"{str}\r\n");
                 }
             }
         }
@@ -341,8 +330,8 @@ namespace TrafficStatistics
             {
                 TrafficLog previous = trafficLogList.Last.Value;
                 TrafficLog current = new TrafficLog(
-                    new Traffic(rawTrafficStatistics),
-                    new Traffic(rawTrafficStatistics, previous.raw)
+                    new Traffic(localTrafficStatistics),
+                    new Traffic(localTrafficStatistics, previous.raw)
                 );
                 trafficLogList.AddLast(current);
 
@@ -395,8 +384,8 @@ namespace TrafficStatistics
 
         private void UpdateTrafficStatistics()
         {
-            RawInbound.Text = new FormattedSize(rawTrafficStatistics.inbound).ToString();
-            RawOutbound.Text = new FormattedSize(rawTrafficStatistics.outbound).ToString();
+            RawInbound.Text = new FormattedSize(localTrafficStatistics.inbound).ToString();
+            RawOutbound.Text = new FormattedSize(localTrafficStatistics.outbound).ToString();
         }
 
         static string GetBufferHexString(byte[] buffer, int offset, int length)

@@ -24,12 +24,12 @@ namespace TrafficStatistics
                 outbound = t1.outbound - t2.outbound;
         }
 
-        public void onInbound(long n)
+        public void onRecv(long n)
         {
             Interlocked.Add(ref inbound, n);
         }
 
-        public void onOutbound(long n)
+        public void onSend(long n)
         {
             Interlocked.Add(ref outbound, n);
         }
