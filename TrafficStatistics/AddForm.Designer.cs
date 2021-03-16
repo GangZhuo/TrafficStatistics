@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.PrintPayloadCheckBox = new System.Windows.Forms.CheckBox();
+            this.PrintLocalPayloadCheckBox = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
             this.TypeComboBox = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -40,24 +40,27 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txSocks5Address = new System.Windows.Forms.TextBox();
             this.chkUseSocks5 = new System.Windows.Forms.CheckBox();
+            this.PrintRemotePayloadCheckBox = new System.Windows.Forms.CheckBox();
+            this.txDescription = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // PrintPayloadCheckBox
+            // PrintLocalPayloadCheckBox
             // 
-            this.PrintPayloadCheckBox.AutoSize = true;
-            this.PrintPayloadCheckBox.Location = new System.Drawing.Point(130, 155);
-            this.PrintPayloadCheckBox.Name = "PrintPayloadCheckBox";
-            this.PrintPayloadCheckBox.Size = new System.Drawing.Size(102, 16);
-            this.PrintPayloadCheckBox.TabIndex = 15;
-            this.PrintPayloadCheckBox.Text = "Print payload";
-            this.PrintPayloadCheckBox.UseVisualStyleBackColor = true;
+            this.PrintLocalPayloadCheckBox.AutoSize = true;
+            this.PrintLocalPayloadCheckBox.Location = new System.Drawing.Point(128, 185);
+            this.PrintLocalPayloadCheckBox.Name = "PrintLocalPayloadCheckBox";
+            this.PrintLocalPayloadCheckBox.Size = new System.Drawing.Size(115, 16);
+            this.PrintLocalPayloadCheckBox.TabIndex = 15;
+            this.PrintLocalPayloadCheckBox.Text = "Print Local Payload";
+            this.PrintLocalPayloadCheckBox.UseVisualStyleBackColor = true;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(17, 16);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(59, 12);
+            this.label3.Size = new System.Drawing.Size(47, 12);
             this.label3.TabIndex = 9;
             this.label3.Text = "Protocol:";
             // 
@@ -78,7 +81,7 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(17, 44);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(89, 12);
+            this.label4.Size = new System.Drawing.Size(74, 12);
             this.label4.TabIndex = 12;
             this.label4.Text = "Local Address:";
             // 
@@ -87,7 +90,7 @@
             this.LeftAddressTextBox.Location = new System.Drawing.Point(128, 40);
             this.LeftAddressTextBox.MaxLength = 200;
             this.LeftAddressTextBox.Name = "LeftAddressTextBox";
-            this.LeftAddressTextBox.Size = new System.Drawing.Size(164, 21);
+            this.LeftAddressTextBox.Size = new System.Drawing.Size(164, 22);
             this.LeftAddressTextBox.TabIndex = 11;
             this.LeftAddressTextBox.Text = "0.0.0.0:5210";
             // 
@@ -96,7 +99,7 @@
             this.RightTextBox.Location = new System.Drawing.Point(128, 69);
             this.RightTextBox.MaxLength = 200;
             this.RightTextBox.Name = "RightTextBox";
-            this.RightTextBox.Size = new System.Drawing.Size(164, 21);
+            this.RightTextBox.Size = new System.Drawing.Size(164, 22);
             this.RightTextBox.TabIndex = 13;
             this.RightTextBox.Text = "192.168.1.2:5211";
             // 
@@ -105,13 +108,13 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(17, 73);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(95, 12);
+            this.label7.Size = new System.Drawing.Size(84, 12);
             this.label7.TabIndex = 14;
             this.label7.Text = "Remote Address:";
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(128, 184);
+            this.btnOK.Location = new System.Drawing.Point(126, 239);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 16;
@@ -121,7 +124,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(219, 183);
+            this.btnCancel.Location = new System.Drawing.Point(217, 238);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 16;
@@ -134,7 +137,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(19, 103);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(95, 12);
+            this.label1.Size = new System.Drawing.Size(81, 12);
             this.label1.TabIndex = 17;
             this.label1.Text = "Socks5 Address:";
             // 
@@ -142,30 +145,59 @@
             // 
             this.txSocks5Address.Location = new System.Drawing.Point(128, 100);
             this.txSocks5Address.Name = "txSocks5Address";
-            this.txSocks5Address.Size = new System.Drawing.Size(164, 21);
+            this.txSocks5Address.Size = new System.Drawing.Size(164, 22);
             this.txSocks5Address.TabIndex = 18;
             // 
             // chkUseSocks5
             // 
             this.chkUseSocks5.AutoSize = true;
-            this.chkUseSocks5.Location = new System.Drawing.Point(128, 128);
+            this.chkUseSocks5.Location = new System.Drawing.Point(128, 156);
             this.chkUseSocks5.Name = "chkUseSocks5";
-            this.chkUseSocks5.Size = new System.Drawing.Size(120, 16);
+            this.chkUseSocks5.Size = new System.Drawing.Size(106, 16);
             this.chkUseSocks5.TabIndex = 19;
             this.chkUseSocks5.Text = "Use socks5 proxy";
             this.chkUseSocks5.UseVisualStyleBackColor = true;
+            // 
+            // PrintRemotePayloadCheckBox
+            // 
+            this.PrintRemotePayloadCheckBox.AutoSize = true;
+            this.PrintRemotePayloadCheckBox.Location = new System.Drawing.Point(128, 207);
+            this.PrintRemotePayloadCheckBox.Name = "PrintRemotePayloadCheckBox";
+            this.PrintRemotePayloadCheckBox.Size = new System.Drawing.Size(125, 16);
+            this.PrintRemotePayloadCheckBox.TabIndex = 20;
+            this.PrintRemotePayloadCheckBox.Text = "Print Remote Payload";
+            this.PrintRemotePayloadCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // txDescription
+            // 
+            this.txDescription.Location = new System.Drawing.Point(128, 128);
+            this.txDescription.Name = "txDescription";
+            this.txDescription.Size = new System.Drawing.Size(164, 22);
+            this.txDescription.TabIndex = 22;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(19, 131);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(61, 12);
+            this.label2.TabIndex = 21;
+            this.label2.Text = "Description:";
             // 
             // AddForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(313, 226);
+            this.ClientSize = new System.Drawing.Size(313, 273);
+            this.Controls.Add(this.txDescription);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.PrintRemotePayloadCheckBox);
             this.Controls.Add(this.chkUseSocks5);
             this.Controls.Add(this.txSocks5Address);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
-            this.Controls.Add(this.PrintPayloadCheckBox);
+            this.Controls.Add(this.PrintLocalPayloadCheckBox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.TypeComboBox);
             this.Controls.Add(this.label4);
@@ -186,7 +218,7 @@
 
         #endregion
 
-        private System.Windows.Forms.CheckBox PrintPayloadCheckBox;
+        private System.Windows.Forms.CheckBox PrintLocalPayloadCheckBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox TypeComboBox;
         private System.Windows.Forms.Label label4;
@@ -198,5 +230,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txSocks5Address;
         private System.Windows.Forms.CheckBox chkUseSocks5;
+        private System.Windows.Forms.CheckBox PrintRemotePayloadCheckBox;
+        private System.Windows.Forms.TextBox txDescription;
+        private System.Windows.Forms.Label label2;
     }
 }

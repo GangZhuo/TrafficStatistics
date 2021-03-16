@@ -42,12 +42,13 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnStopAll = new System.Windows.Forms.Button();
+            this.btnStartAll = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
             this.tabControl1 = new TrafficStatistics.MyTabControl();
-            this.btnStartAll = new System.Windows.Forms.Button();
-            this.btnStopAll = new System.Windows.Forms.Button();
+            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -112,6 +113,7 @@
             // 
             this.listView1.Activation = System.Windows.Forms.ItemActivation.OneClick;
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader6,
             this.columnHeader1,
             this.columnHeader2,
             this.columnHeader3,
@@ -190,6 +192,26 @@
             this.panel1.Size = new System.Drawing.Size(339, 33);
             this.panel1.TabIndex = 1;
             // 
+            // btnStopAll
+            // 
+            this.btnStopAll.Location = new System.Drawing.Point(65, 5);
+            this.btnStopAll.Name = "btnStopAll";
+            this.btnStopAll.Size = new System.Drawing.Size(53, 23);
+            this.btnStopAll.TabIndex = 2;
+            this.btnStopAll.Text = "Stop All";
+            this.btnStopAll.UseVisualStyleBackColor = true;
+            this.btnStopAll.Click += new System.EventHandler(this.btnStopAll_Click);
+            // 
+            // btnStartAll
+            // 
+            this.btnStartAll.Location = new System.Drawing.Point(6, 4);
+            this.btnStartAll.Name = "btnStartAll";
+            this.btnStartAll.Size = new System.Drawing.Size(53, 23);
+            this.btnStartAll.TabIndex = 1;
+            this.btnStartAll.Text = "Start All";
+            this.btnStartAll.UseVisualStyleBackColor = true;
+            this.btnStartAll.Click += new System.EventHandler(this.btnStartAll_Click);
+            // 
             // btnDelete
             // 
             this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -235,25 +257,10 @@
             this.tabControl1.Size = new System.Drawing.Size(808, 637);
             this.tabControl1.TabIndex = 0;
             // 
-            // btnStartAll
+            // columnHeader6
             // 
-            this.btnStartAll.Location = new System.Drawing.Point(6, 4);
-            this.btnStartAll.Name = "btnStartAll";
-            this.btnStartAll.Size = new System.Drawing.Size(53, 23);
-            this.btnStartAll.TabIndex = 1;
-            this.btnStartAll.Text = "Start All";
-            this.btnStartAll.UseVisualStyleBackColor = true;
-            this.btnStartAll.Click += new System.EventHandler(this.btnStartAll_Click);
-            // 
-            // btnStopAll
-            // 
-            this.btnStopAll.Location = new System.Drawing.Point(65, 5);
-            this.btnStopAll.Name = "btnStopAll";
-            this.btnStopAll.Size = new System.Drawing.Size(53, 23);
-            this.btnStopAll.TabIndex = 2;
-            this.btnStopAll.Text = "Stop All";
-            this.btnStopAll.UseVisualStyleBackColor = true;
-            this.btnStopAll.Click += new System.EventHandler(this.btnStopAll_Click);
+            this.columnHeader6.Text = "Description";
+            this.columnHeader6.Width = 80;
             // 
             // TrafficStatisticsForm
             // 
@@ -303,5 +310,6 @@
         private System.Windows.Forms.ColumnHeader columnHeader5;
         private System.Windows.Forms.Button btnStopAll;
         private System.Windows.Forms.Button btnStartAll;
+        private System.Windows.Forms.ColumnHeader columnHeader6;
     }
 }

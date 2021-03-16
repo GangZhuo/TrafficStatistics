@@ -30,16 +30,28 @@ namespace TrafficStatistics
             set { RightTextBox.Text = value; }
         }
 
-        public bool PrintPayload
+        public bool PrintLocalPayload
         {
-            get { return PrintPayloadCheckBox.Checked; }
-            set { PrintPayloadCheckBox.Checked = value; }
+            get { return PrintLocalPayloadCheckBox.Checked; }
+            set { PrintLocalPayloadCheckBox.Checked = value; }
+        }
+
+        public bool PrintRemotePayload
+        {
+            get { return PrintRemotePayloadCheckBox.Checked; }
+            set { PrintRemotePayloadCheckBox.Checked = value; }
         }
 
         public string Socks5Address
         {
             get { return txSocks5Address.Text.Trim(); }
             set { txSocks5Address.Text = value; }
+        }
+
+        public string Description
+        {
+            get { return txDescription.Text.Trim(); }
+            set { txDescription.Text = value; }
         }
 
         public bool UseSocks5

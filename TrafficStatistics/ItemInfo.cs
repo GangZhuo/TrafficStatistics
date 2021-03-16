@@ -8,13 +8,17 @@ namespace TrafficStatistics
 {
     public class ItemInfo
     {
+        public string Description { get; set; }
+
         public string Protocol { get; set; }
 
         public string LocalAddress { get; set; }
 
         public string RemoteAddress { get; set; }
 
-        public bool PrintPayload { get; set; }
+        public bool PrintLocalPayload { get; set; }
+
+        public bool PrintRemotePayload { get; set; }
 
         public string Socks5Address { get; set; }
 

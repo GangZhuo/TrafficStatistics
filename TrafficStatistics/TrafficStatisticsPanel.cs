@@ -19,7 +19,8 @@ namespace TrafficStatistics
         private IRelay relay;
         private Traffic localTrafficStatistics = new Traffic();
         private Traffic remoteTrafficStatistics = new Traffic();
-        private bool printPayload;
+        private bool printLocalPayload;
+        private bool printRemotePayload;
         private bool updating;
 
         public bool AutoStart { get; set; }
@@ -58,13 +59,15 @@ namespace TrafficStatistics
                 }
 
                 TypeComboBox.SelectedItem = ItemInfo?.Protocol ?? TypeComboBox.Items[0];
-                printPayload = ItemInfo?.PrintPayload ?? false;
+                printLocalPayload = ItemInfo?.PrintLocalPayload ?? false;
+                printRemotePayload = ItemInfo?.PrintRemotePayload ?? false;
                 LeftAddressTextBox.Text = ItemInfo?.LocalAddress ?? "127.0.0.1:5210";
                 RightTextBox.Text = ItemInfo?.RemoteAddress ?? "127.0.0.1:5210";
                 txSocks5.Text = ItemInfo?.Socks5Address ?? "127.0.0.1:1080";
                 chkUseProxy.Checked = ItemInfo?.UseSocks5Proxy ?? false;
 
-                PrintPayloadCheckBox.Checked = printPayload;
+                PrintLocalPayloadCheckBox.Checked = printLocalPayload;
+                PrintRemotePayloadCheckBox.Checked = printRemotePayload;
             }
             catch (Exception ex)
             {
@@ -167,9 +170,14 @@ namespace TrafficStatistics
             remoteStat.SetXSize(v);
         }
 
-        private void PrintPayloadCheckBox_CheckedChanged(object sender, EventArgs e)
+        private void PrintLocalPayloadCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            printPayload = PrintPayloadCheckBox.Checked;
+            printLocalPayload = PrintLocalPayloadCheckBox.Checked;
+        }
+
+        private void PrintRemotePayloadCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            printRemotePayload = PrintRemotePayloadCheckBox.Checked;
         }
 
         private EndPoint ParseEndPoint(string address)
@@ -247,7 +255,7 @@ namespace TrafficStatistics
                 t.onRecv(e.Length);
             else
                 t.onSend(e.Length);
-            if (printPayload)
+            if ((printLocalPayload && e.SockType == RelaySockType.Local) || (printRemotePayload && e.SockType == RelaySockType.Remote))
             {
                 string str = GetBufferHexString(e.Buffer, e.Offset, e.Length);
                 if (e.SockAction == RelaySockAction.Recv)
