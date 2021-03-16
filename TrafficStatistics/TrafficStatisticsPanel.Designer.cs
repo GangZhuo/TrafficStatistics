@@ -41,11 +41,10 @@
             this.RawGroupBox = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.localStat = new TrafficStatistics.StatPanel();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.remoteStat = new TrafficStatistics.StatPanel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.PrintRemotePayloadCheckBox = new System.Windows.Forms.CheckBox();
             this.label8 = new System.Windows.Forms.Label();
             this.chkUseProxy = new System.Windows.Forms.CheckBox();
             this.txSocks5 = new System.Windows.Forms.TextBox();
@@ -57,7 +56,8 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.LogTextBox = new System.Windows.Forms.TextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.PrintRemotePayloadCheckBox = new System.Windows.Forms.CheckBox();
+            this.localStat = new TrafficStatistics.StatPanel();
+            this.remoteStat = new TrafficStatistics.StatPanel();
             this.RawGroupBox.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -73,7 +73,7 @@
             // StopButton
             // 
             this.StopButton.Enabled = false;
-            this.StopButton.Location = new System.Drawing.Point(260, 137);
+            this.StopButton.Location = new System.Drawing.Point(499, 41);
             this.StopButton.Name = "StopButton";
             this.StopButton.Size = new System.Drawing.Size(110, 28);
             this.StopButton.TabIndex = 5;
@@ -83,7 +83,7 @@
             // 
             // StartButton
             // 
-            this.StartButton.Location = new System.Drawing.Point(260, 100);
+            this.StartButton.Location = new System.Drawing.Point(499, 12);
             this.StartButton.Name = "StartButton";
             this.StartButton.Size = new System.Drawing.Size(110, 28);
             this.StartButton.TabIndex = 4;
@@ -150,7 +150,7 @@
             // 
             // ResetButton
             // 
-            this.ResetButton.Location = new System.Drawing.Point(376, 100);
+            this.ResetButton.Location = new System.Drawing.Point(615, 12);
             this.ResetButton.Name = "ResetButton";
             this.ResetButton.Size = new System.Drawing.Size(110, 28);
             this.ResetButton.TabIndex = 6;
@@ -165,7 +165,7 @@
             this.RawGroupBox.Location = new System.Drawing.Point(0, 0);
             this.RawGroupBox.Name = "RawGroupBox";
             this.RawGroupBox.Padding = new System.Windows.Forms.Padding(0);
-            this.RawGroupBox.Size = new System.Drawing.Size(571, 144);
+            this.RawGroupBox.Size = new System.Drawing.Size(785, 165);
             this.RawGroupBox.TabIndex = 0;
             this.RawGroupBox.TabStop = false;
             this.RawGroupBox.Text = "Statistics";
@@ -182,7 +182,7 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(571, 129);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(785, 150);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // groupBox3
@@ -191,37 +191,21 @@
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox3.Location = new System.Drawing.Point(3, 3);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(279, 123);
+            this.groupBox3.Size = new System.Drawing.Size(386, 144);
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Local";
-            // 
-            // localStat
-            // 
-            this.localStat.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.localStat.Location = new System.Drawing.Point(3, 18);
-            this.localStat.Name = "localStat";
-            this.localStat.Size = new System.Drawing.Size(273, 102);
-            this.localStat.TabIndex = 0;
             // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.remoteStat);
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox4.Location = new System.Drawing.Point(288, 3);
+            this.groupBox4.Location = new System.Drawing.Point(395, 3);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(280, 123);
+            this.groupBox4.Size = new System.Drawing.Size(387, 144);
             this.groupBox4.TabIndex = 1;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Remote";
-            // 
-            // remoteStat
-            // 
-            this.remoteStat.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.remoteStat.Location = new System.Drawing.Point(3, 18);
-            this.remoteStat.Name = "remoteStat";
-            this.remoteStat.Size = new System.Drawing.Size(274, 102);
-            this.remoteStat.TabIndex = 1;
             // 
             // timer1
             // 
@@ -252,10 +236,21 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.Location = new System.Drawing.Point(6, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(571, 174);
+            this.groupBox1.Size = new System.Drawing.Size(785, 130);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Control Panel";
+            // 
+            // PrintRemotePayloadCheckBox
+            // 
+            this.PrintRemotePayloadCheckBox.AutoSize = true;
+            this.PrintRemotePayloadCheckBox.Location = new System.Drawing.Point(313, 101);
+            this.PrintRemotePayloadCheckBox.Name = "PrintRemotePayloadCheckBox";
+            this.PrintRemotePayloadCheckBox.Size = new System.Drawing.Size(125, 16);
+            this.PrintRemotePayloadCheckBox.TabIndex = 13;
+            this.PrintRemotePayloadCheckBox.Text = "Print Remote Payload";
+            this.PrintRemotePayloadCheckBox.UseVisualStyleBackColor = true;
+            this.PrintRemotePayloadCheckBox.CheckedChanged += new System.EventHandler(this.PrintRemotePayloadCheckBox_CheckedChanged);
             // 
             // label8
             // 
@@ -295,7 +290,7 @@
             // PrintLocalPayloadCheckBox
             // 
             this.PrintLocalPayloadCheckBox.AutoSize = true;
-            this.PrintLocalPayloadCheckBox.Location = new System.Drawing.Point(71, 127);
+            this.PrintLocalPayloadCheckBox.Location = new System.Drawing.Point(313, 79);
             this.PrintLocalPayloadCheckBox.Name = "PrintLocalPayloadCheckBox";
             this.PrintLocalPayloadCheckBox.Size = new System.Drawing.Size(115, 16);
             this.PrintLocalPayloadCheckBox.TabIndex = 8;
@@ -315,7 +310,7 @@
             // 
             // CleanLogsButton
             // 
-            this.CleanLogsButton.Location = new System.Drawing.Point(376, 137);
+            this.CleanLogsButton.Location = new System.Drawing.Point(615, 41);
             this.CleanLogsButton.Name = "CleanLogsButton";
             this.CleanLogsButton.Size = new System.Drawing.Size(110, 28);
             this.CleanLogsButton.TabIndex = 6;
@@ -338,7 +333,7 @@
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(0, 0);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(571, 143);
+            this.groupBox2.Size = new System.Drawing.Size(785, 166);
             this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Log";
@@ -353,14 +348,14 @@
             this.LogTextBox.Multiline = true;
             this.LogTextBox.Name = "LogTextBox";
             this.LogTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.LogTextBox.Size = new System.Drawing.Size(565, 122);
+            this.LogTextBox.Size = new System.Drawing.Size(779, 145);
             this.LogTextBox.TabIndex = 0;
             this.LogTextBox.WordWrap = false;
             // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(6, 180);
+            this.splitContainer1.Location = new System.Drawing.Point(6, 136);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -371,20 +366,25 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.groupBox2);
-            this.splitContainer1.Size = new System.Drawing.Size(571, 291);
-            this.splitContainer1.SplitterDistance = 144;
+            this.splitContainer1.Size = new System.Drawing.Size(785, 335);
+            this.splitContainer1.SplitterDistance = 165;
             this.splitContainer1.TabIndex = 7;
             // 
-            // PrintRemotePayloadCheckBox
+            // localStat
             // 
-            this.PrintRemotePayloadCheckBox.AutoSize = true;
-            this.PrintRemotePayloadCheckBox.Location = new System.Drawing.Point(71, 149);
-            this.PrintRemotePayloadCheckBox.Name = "PrintRemotePayloadCheckBox";
-            this.PrintRemotePayloadCheckBox.Size = new System.Drawing.Size(125, 16);
-            this.PrintRemotePayloadCheckBox.TabIndex = 13;
-            this.PrintRemotePayloadCheckBox.Text = "Print Remote Payload";
-            this.PrintRemotePayloadCheckBox.UseVisualStyleBackColor = true;
-            this.PrintRemotePayloadCheckBox.CheckedChanged += new System.EventHandler(this.PrintRemotePayloadCheckBox_CheckedChanged);
+            this.localStat.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.localStat.Location = new System.Drawing.Point(3, 18);
+            this.localStat.Name = "localStat";
+            this.localStat.Size = new System.Drawing.Size(380, 123);
+            this.localStat.TabIndex = 0;
+            // 
+            // remoteStat
+            // 
+            this.remoteStat.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.remoteStat.Location = new System.Drawing.Point(3, 18);
+            this.remoteStat.Name = "remoteStat";
+            this.remoteStat.Size = new System.Drawing.Size(381, 123);
+            this.remoteStat.TabIndex = 1;
             // 
             // TrafficStatisticsPanel
             // 
@@ -394,7 +394,7 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "TrafficStatisticsPanel";
             this.Padding = new System.Windows.Forms.Padding(6);
-            this.Size = new System.Drawing.Size(583, 477);
+            this.Size = new System.Drawing.Size(797, 477);
             this.Load += new System.EventHandler(this.TrafficStatisticsPanel_Load);
             this.RawGroupBox.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
