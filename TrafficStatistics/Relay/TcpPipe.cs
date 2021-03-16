@@ -67,7 +67,7 @@ namespace TrafficStatistics.Relay
                     _id = System.Threading.Interlocked.Increment(ref _maxid);
 
                     // Connect to the remote endpoint.
-                    _relay.onWriteLog(new WriteLogEventArgs($"\r\n{_id}: 连接 {_remoteEP} ...\r\n"));
+                    //_relay.onWriteLog(new WriteLogEventArgs($"\r\n{_id}: 连接 {_remoteEP} ...\r\n"));
                     _remote.BeginConnect(
                         _useProxy ? _socks5EP : _remoteEP,
                         new AsyncCallback(ConnectCallback), null);

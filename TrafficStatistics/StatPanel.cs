@@ -111,8 +111,8 @@ namespace TrafficStatistics
             lbRecvTotal.Text = new FormattedSize(traffic.inbound).ToString();
             lbSendTotal.Text = new FormattedSize(traffic.outbound).ToString();
 
-            TrafficChart.Series["Inbound"].LegendText = "Inbound (" + new FormattedSize(lastLog.speed.inbound) + "/s)";
-            TrafficChart.Series["Outbound"].LegendText = "Outbound (" + new FormattedSize(lastLog.speed.outbound) + "/s)";
+            //TrafficChart.Series["Inbound"].LegendText = "Inbound (" + new FormattedSize(lastLog.speed.inbound) + "/s)";
+            //TrafficChart.Series["Outbound"].LegendText = "Outbound (" + new FormattedSize(lastLog.speed.outbound) + "/s)";
 
             TrafficChart.Series["Inbound"].Points.DataBindY(inboundPoints);
             TrafficChart.Series["Outbound"].Points.DataBindY(outboundPoints);
