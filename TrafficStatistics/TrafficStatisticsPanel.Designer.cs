@@ -41,9 +41,12 @@
             this.RawGroupBox = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.localStat = new TrafficStatistics.StatPanel();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.remoteStat = new TrafficStatistics.StatPanel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.PrintPayloadAsTextCheckBox = new System.Windows.Forms.CheckBox();
             this.PrintRemotePayloadCheckBox = new System.Windows.Forms.CheckBox();
             this.label8 = new System.Windows.Forms.Label();
             this.chkUseProxy = new System.Windows.Forms.CheckBox();
@@ -56,8 +59,6 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.LogTextBox = new System.Windows.Forms.TextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.localStat = new TrafficStatistics.StatPanel();
-            this.remoteStat = new TrafficStatistics.StatPanel();
             this.RawGroupBox.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -196,6 +197,14 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Local";
             // 
+            // localStat
+            // 
+            this.localStat.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.localStat.Location = new System.Drawing.Point(3, 18);
+            this.localStat.Name = "localStat";
+            this.localStat.Size = new System.Drawing.Size(380, 123);
+            this.localStat.TabIndex = 0;
+            // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.remoteStat);
@@ -207,6 +216,14 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Remote";
             // 
+            // remoteStat
+            // 
+            this.remoteStat.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.remoteStat.Location = new System.Drawing.Point(3, 18);
+            this.remoteStat.Name = "remoteStat";
+            this.remoteStat.Size = new System.Drawing.Size(381, 123);
+            this.remoteStat.TabIndex = 1;
+            // 
             // timer1
             // 
             this.timer1.Enabled = true;
@@ -215,6 +232,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.PrintPayloadAsTextCheckBox);
             this.groupBox1.Controls.Add(this.PrintRemotePayloadCheckBox);
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.chkUseProxy);
@@ -240,6 +258,17 @@
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Control Panel";
+            // 
+            // PrintPayloadAsTextCheckBox
+            // 
+            this.PrintPayloadAsTextCheckBox.AutoSize = true;
+            this.PrintPayloadAsTextCheckBox.Location = new System.Drawing.Point(465, 101);
+            this.PrintPayloadAsTextCheckBox.Name = "PrintPayloadAsTextCheckBox";
+            this.PrintPayloadAsTextCheckBox.Size = new System.Drawing.Size(122, 16);
+            this.PrintPayloadAsTextCheckBox.TabIndex = 14;
+            this.PrintPayloadAsTextCheckBox.Text = "Print Payload as Text";
+            this.PrintPayloadAsTextCheckBox.UseVisualStyleBackColor = true;
+            this.PrintPayloadAsTextCheckBox.CheckedChanged += new System.EventHandler(this.PrintPayloadAsTextCheckBox_CheckedChanged);
             // 
             // PrintRemotePayloadCheckBox
             // 
@@ -370,22 +399,6 @@
             this.splitContainer1.SplitterDistance = 165;
             this.splitContainer1.TabIndex = 7;
             // 
-            // localStat
-            // 
-            this.localStat.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.localStat.Location = new System.Drawing.Point(3, 18);
-            this.localStat.Name = "localStat";
-            this.localStat.Size = new System.Drawing.Size(380, 123);
-            this.localStat.TabIndex = 0;
-            // 
-            // remoteStat
-            // 
-            this.remoteStat.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.remoteStat.Location = new System.Drawing.Point(3, 18);
-            this.remoteStat.Name = "remoteStat";
-            this.remoteStat.Size = new System.Drawing.Size(381, 123);
-            this.remoteStat.TabIndex = 1;
-            // 
             // TrafficStatisticsPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -442,5 +455,6 @@
         private StatPanel localStat;
         private StatPanel remoteStat;
         private System.Windows.Forms.CheckBox PrintRemotePayloadCheckBox;
+        private System.Windows.Forms.CheckBox PrintPayloadAsTextCheckBox;
     }
 }

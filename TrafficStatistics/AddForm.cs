@@ -42,6 +42,12 @@ namespace TrafficStatistics
             set { PrintRemotePayloadCheckBox.Checked = value; }
         }
 
+        public bool PrintPayloadAsText
+        {
+            get { return PrintPayloadAsTextCheckBox.Checked; }
+            set { PrintPayloadAsTextCheckBox.Checked = value; }
+        }
+
         public string Socks5Address
         {
             get { return txSocks5Address.Text.Trim(); }

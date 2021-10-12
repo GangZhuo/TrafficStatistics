@@ -92,6 +92,7 @@ namespace TrafficStatistics
                         RemoteAddress = frm.RemoteAddress,
                         PrintLocalPayload = frm.PrintLocalPayload,
                         PrintRemotePayload = frm.PrintRemotePayload,
+                        PrintPayloadAsText = frm.PrintPayloadAsText,
                         Socks5Address = frm.Socks5Address,
                         UseSocks5Proxy = frm.UseSocks5,
                     };
@@ -126,6 +127,7 @@ namespace TrafficStatistics
                 frm.RemoteAddress = info.RemoteAddress;
                 frm.PrintLocalPayload = info.PrintLocalPayload;
                 frm.PrintRemotePayload = info.PrintRemotePayload;
+                frm.PrintPayloadAsText = info.PrintPayloadAsText;
                 frm.Socks5Address = info.Socks5Address;
                 frm.UseSocks5 = info.UseSocks5Proxy;
                 if (frm.ShowDialog() == DialogResult.OK)
@@ -136,6 +138,7 @@ namespace TrafficStatistics
                     info.RemoteAddress = frm.RemoteAddress;
                     info.PrintLocalPayload = frm.PrintLocalPayload;
                     info.PrintRemotePayload = frm.PrintRemotePayload;
+                    info.PrintPayloadAsText = frm.PrintPayloadAsText;
                     info.Socks5Address = frm.Socks5Address;
                     info.UseSocks5Proxy = frm.UseSocks5;
 
@@ -208,6 +211,7 @@ namespace TrafficStatistics
                 xelem.Add(new XAttribute("remote", info.RemoteAddress));
                 xelem.Add(new XAttribute("printLocal", info.PrintLocalPayload ? "true" : "false"));
                 xelem.Add(new XAttribute("printRemote", info.PrintRemotePayload ? "true" : "false"));
+                xelem.Add(new XAttribute("printAsText", info.PrintPayloadAsText ? "true" : "false"));
                 xelem.Add(new XAttribute("socks5", info.Socks5Address));
                 xelem.Add(new XAttribute("proxy", info.UseSocks5Proxy ? "true" : "false"));
                 xelem.Add(new XAttribute("chart", info.ChartRange));
@@ -242,6 +246,7 @@ namespace TrafficStatistics
                         RemoteAddress = x.Attribute("remote")?.Value ?? "192.168.1.1",
                         PrintLocalPayload = x.Attribute("printLocal")?.Value == "true",
                         PrintRemotePayload = x.Attribute("printRemote")?.Value == "true",
+                        PrintPayloadAsText = x.Attribute("printAsText")?.Value == "true",
                         Socks5Address = x.Attribute("socks5")?.Value ?? "127.0.0.1:1080",
                         UseSocks5Proxy = x.Attribute("proxy")?.Value == "true",
                         ChartRange = toInt(x.Attribute("chart")?.Value),

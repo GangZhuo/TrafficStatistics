@@ -43,6 +43,7 @@
             this.PrintRemotePayloadCheckBox = new System.Windows.Forms.CheckBox();
             this.txDescription = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.PrintPayloadAsTextCheckBox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // PrintLocalPayloadCheckBox
@@ -114,7 +115,7 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(126, 239);
+            this.btnOK.Location = new System.Drawing.Point(126, 263);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 16;
@@ -124,7 +125,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(217, 238);
+            this.btnCancel.Location = new System.Drawing.Point(217, 262);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 16;
@@ -184,11 +185,22 @@
             this.label2.TabIndex = 21;
             this.label2.Text = "Description:";
             // 
+            // PrintPayloadAsTextCheckBox
+            // 
+            this.PrintPayloadAsTextCheckBox.AutoSize = true;
+            this.PrintPayloadAsTextCheckBox.Location = new System.Drawing.Point(128, 229);
+            this.PrintPayloadAsTextCheckBox.Name = "PrintPayloadAsTextCheckBox";
+            this.PrintPayloadAsTextCheckBox.Size = new System.Drawing.Size(122, 16);
+            this.PrintPayloadAsTextCheckBox.TabIndex = 23;
+            this.PrintPayloadAsTextCheckBox.Text = "Print Payload as Text";
+            this.PrintPayloadAsTextCheckBox.UseVisualStyleBackColor = true;
+            // 
             // AddForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(313, 273);
+            this.ClientSize = new System.Drawing.Size(313, 298);
+            this.Controls.Add(this.PrintPayloadAsTextCheckBox);
             this.Controls.Add(this.txDescription);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.PrintRemotePayloadCheckBox);
@@ -233,5 +245,6 @@
         private System.Windows.Forms.CheckBox PrintRemotePayloadCheckBox;
         private System.Windows.Forms.TextBox txDescription;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.CheckBox PrintPayloadAsTextCheckBox;
     }
 }
