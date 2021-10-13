@@ -16,6 +16,7 @@ namespace TrafficStatistics
 {
     public partial class TrafficStatisticsForm : Form
     {
+        private string _configFile = "item.xml";
         private ListViewItem _SelectedItem;
 
         public TrafficStatisticsForm()
@@ -31,7 +32,7 @@ namespace TrafficStatistics
         {
             try
             {
-                LoadItems();
+                btnOpenNewConfigFile_Click(this, EventArgs.Empty);
             }
             catch (Exception ex)
             {
@@ -196,7 +197,7 @@ namespace TrafficStatistics
 
         private void SaveItems()
         {
-            var filename = "item.xml";
+            var filename = _configFile;
             var xdoc = new XDocument();
             var xroot = new XElement("items");
             xdoc.Add(xroot);
@@ -228,7 +229,7 @@ namespace TrafficStatistics
 
         private void LoadItems()
         {
-            var filename = "item.xml";
+            var filename = _configFile;
             if (File.Exists(filename))
             {
                 var toInt = new Func<string, int>((x) => {
@@ -331,6 +332,28 @@ namespace TrafficStatistics
                     this.tabControl1.TabPages.Clear();
                 }
 
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnOpenNewConfigFile_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var frm = new SelectConfigFileForm();
+                var fi = new FileInfo(_configFile);
+                if (fi.Exists)
+                    frm.ConfigFile = fi.FullName;
+                else
+                    frm.ConfigFile = _configFile;
+                if (frm.ShowDialog() == DialogResult.OK)
+                {
+                    _configFile = frm.ConfigFile;
+                    LoadItems();
+                }
             }
             catch (Exception ex)
             {

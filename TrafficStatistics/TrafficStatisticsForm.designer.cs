@@ -34,6 +34,7 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.listView1 = new System.Windows.Forms.ListView();
+            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -48,7 +49,7 @@
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
             this.tabControl1 = new TrafficStatistics.MyTabControl();
-            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.btnOpenNewConfigFile = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -95,9 +96,9 @@
             this.panel2.Controls.Add(this.panel4);
             this.panel2.Controls.Add(this.panel3);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(3, 51);
+            this.panel2.Location = new System.Drawing.Point(3, 78);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(339, 583);
+            this.panel2.Size = new System.Drawing.Size(339, 556);
             this.panel2.TabIndex = 2;
             // 
             // panel4
@@ -106,7 +107,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(339, 558);
+            this.panel4.Size = new System.Drawing.Size(339, 531);
             this.panel4.TabIndex = 2;
             // 
             // listView1
@@ -127,10 +128,15 @@
             this.listView1.Location = new System.Drawing.Point(0, 0);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(339, 558);
+            this.listView1.Size = new System.Drawing.Size(339, 531);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader6
+            // 
+            this.columnHeader6.Text = "Description";
+            this.columnHeader6.Width = 80;
             // 
             // columnHeader1
             // 
@@ -164,7 +170,7 @@
             // 
             this.panel3.Controls.Add(this.label1);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel3.Location = new System.Drawing.Point(0, 558);
+            this.panel3.Location = new System.Drawing.Point(0, 531);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(339, 25);
             this.panel3.TabIndex = 1;
@@ -181,6 +187,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnOpenNewConfigFile);
             this.panel1.Controls.Add(this.btnStopAll);
             this.panel1.Controls.Add(this.btnStartAll);
             this.panel1.Controls.Add(this.btnDelete);
@@ -189,12 +196,13 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(3, 18);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(339, 33);
+            this.panel1.Size = new System.Drawing.Size(339, 60);
             this.panel1.TabIndex = 1;
             // 
             // btnStopAll
             // 
-            this.btnStopAll.Location = new System.Drawing.Point(65, 5);
+            this.btnStopAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnStopAll.Location = new System.Drawing.Point(65, 32);
             this.btnStopAll.Name = "btnStopAll";
             this.btnStopAll.Size = new System.Drawing.Size(53, 23);
             this.btnStopAll.TabIndex = 2;
@@ -204,7 +212,8 @@
             // 
             // btnStartAll
             // 
-            this.btnStartAll.Location = new System.Drawing.Point(6, 4);
+            this.btnStartAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnStartAll.Location = new System.Drawing.Point(6, 31);
             this.btnStartAll.Name = "btnStartAll";
             this.btnStartAll.Size = new System.Drawing.Size(53, 23);
             this.btnStartAll.TabIndex = 1;
@@ -214,8 +223,8 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDelete.Location = new System.Drawing.Point(282, 5);
+            this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDelete.Location = new System.Drawing.Point(282, 32);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(54, 23);
             this.btnDelete.TabIndex = 0;
@@ -225,8 +234,8 @@
             // 
             // btnEdit
             // 
-            this.btnEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnEdit.Location = new System.Drawing.Point(222, 5);
+            this.btnEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnEdit.Location = new System.Drawing.Point(222, 32);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(54, 23);
             this.btnEdit.TabIndex = 0;
@@ -236,8 +245,8 @@
             // 
             // btnAdd
             // 
-            this.btnAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAdd.Location = new System.Drawing.Point(162, 5);
+            this.btnAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAdd.Location = new System.Drawing.Point(162, 32);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(54, 23);
             this.btnAdd.TabIndex = 0;
@@ -257,10 +266,15 @@
             this.tabControl1.Size = new System.Drawing.Size(808, 637);
             this.tabControl1.TabIndex = 0;
             // 
-            // columnHeader6
+            // btnOpenNewConfigFile
             // 
-            this.columnHeader6.Text = "Description";
-            this.columnHeader6.Width = 80;
+            this.btnOpenNewConfigFile.Location = new System.Drawing.Point(6, 3);
+            this.btnOpenNewConfigFile.Name = "btnOpenNewConfigFile";
+            this.btnOpenNewConfigFile.Size = new System.Drawing.Size(159, 23);
+            this.btnOpenNewConfigFile.TabIndex = 1;
+            this.btnOpenNewConfigFile.Text = "Open New Config File";
+            this.btnOpenNewConfigFile.UseVisualStyleBackColor = true;
+            this.btnOpenNewConfigFile.Click += new System.EventHandler(this.btnOpenNewConfigFile_Click);
             // 
             // TrafficStatisticsForm
             // 
@@ -311,5 +325,6 @@
         private System.Windows.Forms.Button btnStopAll;
         private System.Windows.Forms.Button btnStartAll;
         private System.Windows.Forms.ColumnHeader columnHeader6;
+        private System.Windows.Forms.Button btnOpenNewConfigFile;
     }
 }

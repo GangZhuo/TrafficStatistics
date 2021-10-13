@@ -68,6 +68,12 @@
     <Compile Include="Relay\TcpRelay.cs" />
     <Compile Include="Relay\UDPPipe.cs" />
     <Compile Include="Relay\UdpRelay.cs" />
+    <Compile Include="SelectConfigFileForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SelectConfigFileForm.Designer.cs">
+      <DependentUpon>SelectConfigFileForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="StatPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -100,6 +106,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="SelectConfigFileForm.resx">
+      <DependentUpon>SelectConfigFileForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="StatPanel.resx">
       <DependentUpon>StatPanel.cs</DependentUpon>
     </EmbeddedResource>
