@@ -273,9 +273,15 @@ namespace TrafficStatistics
                 }
                 _configName = title;
                 if (!string.IsNullOrEmpty(title))
+                {
                     this.Text = title;
+                    Program._notifyIcon.Text = title;
+                }
                 else
+                {
                     this.Text = "Traffic Statistics - Open Source on Github https://github.com/GangZhuo/TrafficStatistics";
+                    Program._notifyIcon.Text = "Traffic Statistics";
+                }
             }
         }
 

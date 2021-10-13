@@ -9,7 +9,7 @@ namespace TrafficStatistics
 {
     static class Program
     {
-        static NotifyIcon _notifyIcon;
+        public static NotifyIcon _notifyIcon { get; private set; }
         static ContextMenu contextMenu1;
         static TrafficStatisticsForm form;
         static bool closing;
