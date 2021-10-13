@@ -17,6 +17,7 @@ namespace TrafficStatistics
     public partial class TrafficStatisticsForm : Form
     {
         private string _configFile = "item.xml";
+        private string _configName = "";
         private ListViewItem _SelectedItem;
 
         public TrafficStatisticsForm()
@@ -202,7 +203,9 @@ namespace TrafficStatistics
             var xroot = new XElement("items");
             xdoc.Add(xroot);
 
-            foreach(ListViewItem item in listView1.Items)
+            xroot.Add(new XAttribute("name", _configName ?? ""));
+
+            foreach (ListViewItem item in listView1.Items)
             {
                 var info = item.Tag as ItemInfo;
                 var xelem = new XElement("item");
@@ -239,6 +242,7 @@ namespace TrafficStatistics
                     return 0;
                 });
                 var xdoc = XDocument.Load(filename);
+                var title = xdoc.Root.Attribute("name")?.Value;
                 var list = xdoc.Root.Elements().Where(x => x.Name == "item")
                     .Select(x => new ItemInfo
                     {
@@ -267,6 +271,11 @@ namespace TrafficStatistics
                     lvitem.Tag = info;
                     this.listView1.Items.Add(lvitem);
                 }
+                _configName = title;
+                if (!string.IsNullOrEmpty(title))
+                    this.Text = title;
+                else
+                    this.Text = "Traffic Statistics - Open Source on Github https://github.com/GangZhuo/TrafficStatistics";
             }
         }
 
